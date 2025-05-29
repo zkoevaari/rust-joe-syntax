@@ -1,0 +1,268 @@
+# JOE syntax highlight file for Rust
+
+=Idle
+=Comment		dim
+=Number			cyan
+=Boolean		cyan
+=String			magenta #cyan
+=StringEscape           bold magenta #cyan
+=Character		magenta #cyan
+=CharacterEscape
+
+=Lifetime	cyan #yellow
+=Attribute	yellow #blue
+=Macro		yellow #blue
+
+=Keyword        bold blue
+=Operator	bold blue
+=Statement	bold blue
+=Conditional	bold blue
+=Loop		bold blue
+=Qualifyer	bold blue
+=Structure	bold blue
+=Type		bold blue
+=Deprecated
+
+=Bad	        bold red
+=Brace		#magenta
+=Control
+=QuestionMark	red
+
+
+:pre_idle Idle
+	*		NULL		noeat call=.rust()
+
+.subr rust
+
+:idle Idle
+	*		idle
+	"{}"		brace		recolor=-1
+	"0"		zero		recolor=-1
+	"1-9"		decimal		recolor=-1
+	"."		decimal_point	recolor=-1
+	"\""		string		recolor=-1
+	"'"		single_quote	recolor=-1
+	"/"		slash		recolor=-1
+	"#"		hash		recolor=-1
+	"?"		question	recolor=-1
+	"a-zA-Z_"	ident		mark buffer
+	",:;=()><[]*&|!~+\-%^"	control	recolor=-1
+
+:slash Idle
+	*		idle		noeat
+	"*"		comment		recolor=-2
+	"/"		line_comment	recolor=-2
+
+:brace Brace
+	*		idle		noeat
+
+:control Control
+	*		idle		noeat
+
+:question QuestionMark
+	*		idle		noeat
+
+:comment Comment
+	*		comment
+	"*"		maybe_end_comment
+
+:maybe_end_comment Comment
+	*		comment		noeat
+	"/"		idle
+
+:line_comment Comment
+	*		line_comment
+	"\n"		idle
+
+
+# Numbers
+
+
+# Character constants, lifetimes and loop_labels:
+
+:single_quote Lifetime
+	*		char            recolor=-2
+	"a-zA-Z_"	maybe_lifetime
+	"'"		idle		recolormark
+
+:maybe_lifetime Lifetime
+	*		idle		noeat
+	"'"		char_done	recolor=-3
+	"0-9a-zA-Z_"	maybe_lifetime
+
+:char Character
+	*		idle		noeat recolor=-3
+	"'"		char_done
+
+:char_done Character
+	*		idle		noeat
+
+
+# Character escapes
+# Strings
+# Raw strings
+# Byte strings
+# Raw byte strings
+
+
+# Identifiers
+
+:ident Idle
+	*		idle	noeat markend strings
+
+	# Strict keywords
+	"as"		operator
+	"async"		quali
+	"await"		stmt
+	"break"		loop
+	"const"		quali
+	"continue"	loop
+	"crate"		kw
+	"dyn"		kw
+	"else"		cond
+	"enum"		struct
+	"extern"	quali
+	"false"		bool
+	"fn"		struct
+	"for"		loop
+	"if"		cond
+	"impl"		kw
+	"in"		operator
+	"let"		kw
+	"loop"		loop
+	"match"		kw
+	"mod"		kw
+	"move"		kw
+	"mut"		kw
+	"pub"		quali
+	"ref"		kw
+	"return"	stmt
+	"self"		kw
+	"Self"		kw
+	"static"	quali
+	"struct"	struct
+	"super"		kw
+	"trait"		kw
+	"true"		bool
+	"type"		kw
+	"unsafe"	quali
+	"use"		kw
+	"where"		kw
+	"while"		loop
+
+	# Weak keywords
+	"macro_rules"	kw
+	"raw"		kw
+	"safe"		quali
+	"union"		struct
+
+	# Reserved keywords
+	"abstract"	quali
+	"become"	kw
+	"box"		kw
+	"do"		loop
+	"final"		quali
+	"gen"		kw
+	"macro"		kw
+	"override"	quali
+	"priv"		quali
+	"try"		kw
+	"typeof"	kw
+	"unsized"	quali
+	"virtual"	quali
+	"yield"		stmt
+
+	# Built-in types
+	"bool"		type
+	"char"		type
+	"f16"		type
+	"f32"		type
+	"f64"		type
+	"f128"		type
+	"i8"		type
+	"i16"		type
+	"i32"		type
+	"i64"		type
+	"i128"		type
+	"isize"		type
+	"str"		type
+	"u8"		type
+	"u16"		type
+	"u32"		type
+	"u64"		type
+	"u128"		type
+	"usize"		type
+
+	# Deprecated (i.e. may be used as ident.)
+	"alignof"	depr
+	"be"		depr
+	"int"		depr
+	"offsetof"	depr
+	"once"		depr
+	"proc"		depr
+	"pure"		depr
+	"sizeof"	depr
+	"uint"		depr
+
+	# Prefixes
+	"r"		raw_prefix
+	"b"		byte_prefix
+	"br"		raw_byte_prefix
+done
+	"a-zA-Z0-9_"	ident
+	"!"		macro		noeat recolormark
+
+:kw Keyword
+	*		idle		noeat
+
+:bool Boolean
+	*		idle		noeat
+
+:operator Operator
+	*		idle		noeat
+
+:stmt Statement
+	*		idle		noeat
+
+:cond Conditional
+	*		idle		noeat
+
+:loop Loop
+	*		idle		noeat
+
+:quali Qualifyer
+	*		idle		noeat
+
+:struct Structure
+	*		idle		noeat
+
+:type Type
+	*		idle		noeat
+
+:depr Deprecated
+	*		idle		noeat
+
+
+# Macro invocations
+
+:macro Macro
+	*		idle
+
+
+# Attributes
+
+:hash Attribute
+	*		idle		noeat recolor=-2
+	"["		attr
+	"!"		maybe_inner
+
+:maybe_inner Attribute
+	*		idle		noeat recolor=-3
+	"["		attr
+
+:attr Attribute
+	*		attr
+	"]"		idle
+
+
+.end
