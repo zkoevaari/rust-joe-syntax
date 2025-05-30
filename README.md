@@ -33,9 +33,19 @@ along with this program; if not, see
 <https://www.gnu.org/licenses/>.
 ```
 
+
+## New features ##
+
+(TODO: compared to what?)
+- Number literals:
+    - Improved underscore and decimal point parsing
+    - Improved float exponents
+- Literal suffix support: marks suspicious tokens that are valid, but only
+    when processed by a macro
+
+
 ## TODO ##
 
-- numbers
 - strings
 - raw strings
 - byte strings
@@ -48,4 +58,4 @@ along with this program; if not, see
 - raw identifiers and raw lifetimes
 - empty ''
 - ..
-- 1u8?
+- check for possible `noeat` infinite loops

@@ -1,30 +1,48 @@
 # JOE syntax highlight file for Rust
 
 =Idle
+#~ =Comment		green
 =Comment		dim
 =Number			cyan
 =Boolean		cyan
-=String			magenta #cyan
-=StringEscape           bold magenta #cyan
-=Character		magenta #cyan
+#~ =String			cyan
+=String			magenta
+#~ =StringEscape           bold cyan
+=StringEscape           bold magenta
+#~ =Character		cyan
+=Character		magenta
 =CharacterEscape
 
-=Lifetime	cyan #yellow
-=Attribute	yellow #blue
-=Macro		yellow #blue
+#~ =Lifetime	yellow
+=Lifetime	cyan
+#~ =Attribute	blue
+=Attribute	yellow
+#~ =Macro		blue
+=Macro		yellow
+#~ =Suffix		blue
+=Suffix		yellow
 
+#~ =Keyword        bold
 =Keyword        bold blue
+#~ =Operator	bold
 =Operator	bold blue
+#~ =Statement	bold
 =Statement	bold blue
+#~ =Conditional	bold
 =Conditional	bold blue
+#~ =Loop		bold
 =Loop		bold blue
+#~ =Qualifyer	bold
 =Qualifyer	bold blue
+#~ =Structure	bold
 =Structure	bold blue
+#~ =Type		bold
 =Type		bold blue
 =Deprecated
 
 =Bad	        bold red
-=Brace		#magenta
+#~ =Brace		magenta
+=Brace
 =Control
 =QuestionMark	red
 
@@ -39,14 +57,13 @@
 	"{}"		brace		recolor=-1
 	"0"		zero		recolor=-1
 	"1-9"		decimal		recolor=-1
-	"."		decimal_point	recolor=-1
 	"\""		string		recolor=-1
 	"'"		single_quote	recolor=-1
 	"/"		slash		recolor=-1
 	"#"		hash		recolor=-1
 	"?"		question	recolor=-1
 	"a-zA-Z_"	ident		mark buffer
-	",:;=()><[]*&|!~+\-%^"	control	recolor=-1
+	".,:;=()><[]*&|!~+\-%^"	control	recolor=-1
 
 :slash Idle
 	*		idle		noeat
@@ -77,6 +94,131 @@
 
 # Numbers
 
+:zero Number
+	*		suffix	noeat
+	"b"		maybe_binary    mark recolor=-1
+	"o"		maybe_octal     mark recolor=-1
+	"x"		maybe_hex       mark recolor=-1
+	"0-9_"		decimal	recolor=-1
+	"."		maybe_float
+	"eE"		maybe_exp       mark recolor=-1
+	"ui"		int_suffix	noeat mark buffer
+	"f"		float_suffix    noeat mark buffer
+
+:maybe_binary Bad
+	*		idle	noeat
+	"_"		maybe_binary
+	"01"		binary  noeat recolormark
+	"2-9a-zA-Z"	bad_number
+
+:binary Number
+	*		suffix	noeat
+	"01_"		binary
+	"ui"		int_suffix	noeat mark buffer
+        "2-9eE"   	bad_number      recolor=-1
+        "."             maybe_bad_number        recolor=-1
+
+:maybe_octal Bad
+	*		idle	noeat
+	"_"		maybe_octal
+	"0-7"		octal   noeat recolormark
+	"89a-zA-Z"	bad_number
+
+:octal Number
+	*		suffix	noeat
+	"0-7_"		octal
+	"ui"		int_suffix	noeat mark buffer
+        "89eE"       	bad_number      recolor=-1
+        "."             maybe_bad_number        recolor=-1
+
+:maybe_hex Bad
+	*		idle	noeat
+	"_"     	maybe_hex
+	"0-9A-Fa-f"	hex     noeat recolormark
+	"g-zG-Z"	bad_number
+
+:hex Number
+	*		suffix	noeat
+	"0-9A-Fa-f_"	hex
+	"ui"		int_suffix	noeat mark buffer
+        "."             maybe_bad_number        recolor=-1
+
+:decimal Number
+	*		suffix	noeat
+	"0-9_"		decimal
+	"."		maybe_float
+	"eE"		maybe_exp       mark recolor=-1
+	"ui"		int_suffix	noeat mark buffer
+	"f"		float_suffix	noeat mark buffer
+
+:int_suffix Suffix
+	*		suffix	noeat markend strings
+	"i8"		valid_number_suffix
+	"i16"		valid_number_suffix
+	"i32"		valid_number_suffix
+	"i64"		valid_number_suffix
+	"i128"		valid_number_suffix
+	"isize"		valid_number_suffix
+	"u8"		valid_number_suffix
+	"u16"		valid_number_suffix
+	"u32"		valid_number_suffix
+	"u64"		valid_number_suffix
+	"u128"		valid_number_suffix
+	"usize"		valid_number_suffix
+done
+	"iusze0-9"	int_suffix
+
+:maybe_float Number
+	*		idle	noeat recolor=-2
+	"0-9"		float
+
+:float Number
+	*		suffix	noeat
+	"0-9_"		float
+	"eE"		maybe_exp       mark recolor=-1
+	"f"		float_suffix	noeat mark buffer
+
+:maybe_exp Bad
+	*		bad_number	noeat
+	"_+\-"   	exp_sign
+        "0-9"           exp     noeat recolormark
+
+:exp_sign Bad
+        *               bad_number    noeat
+        "_"        	exp_sign
+        "0-9"           exp     noeat recolormark
+
+:exp Number
+	*		suffix	noeat
+	"0-9_"		exp
+	"f"		float_suffix	noeat mark buffer
+
+:float_suffix Suffix
+	*		suffix	noeat markend strings
+	"f16"		valid_number_suffix
+	"f32"		valid_number_suffix
+	"f64"		valid_number_suffix
+	"f128"		valid_number_suffix
+done
+	"f0-9"   	float_suffix
+
+:valid_number_suffix Number
+	*		idle	noeat
+	"a-zA-z0-9_"	suffix        noeat recolormark
+
+:suffix Suffix
+        *		idle	noeat
+	"a-zA-z0-9_"	suffix
+
+:maybe_bad_number Bad
+	*		idle	noeat
+	"a-zA-Z_"	idle	noeat recolor=-2
+	"0-9"	        bad_number
+
+:bad_number Bad
+	*		idle	noeat
+	"a-zA-z0-9_"	bad_number
+
 
 # Character constants, lifetimes and loop_labels:
 
@@ -105,7 +247,7 @@
 # Raw byte strings
 
 
-# Identifiers
+# Identifiers (Edition 2024)
 
 :ident Idle
 	*		idle	noeat markend strings
