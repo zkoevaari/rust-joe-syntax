@@ -7,8 +7,8 @@
 =Boolean		cyan
 #~ =String			cyan
 =String			magenta
-#~ =StringEscape           bold cyan
-=StringEscape           bold magenta
+#~ =StringEscape		bold cyan
+=StringEscape		bold magenta
 #~ =Character		cyan
 =Character		magenta
 =CharacterEscape
@@ -22,8 +22,8 @@
 #~ =Suffix		blue
 =Suffix		yellow
 
-#~ =Keyword        bold
-=Keyword        bold blue
+#~ =Keyword	bold
+=Keyword	bold blue
 #~ =Operator	bold
 =Operator	bold blue
 #~ =Statement	bold
@@ -40,7 +40,7 @@
 =Type		bold blue
 =Deprecated
 
-=Bad	        bold red
+=Bad		bold red
 #~ =Brace		magenta
 =Brace
 =Control
@@ -96,63 +96,63 @@
 
 :zero Number
 	*		suffix	noeat
-	"b"		maybe_binary    mark recolor=-1
-	"o"		maybe_octal     mark recolor=-1
-	"x"		maybe_hex       mark recolor=-1
-	"0-9_"		decimal	recolor=-1
+	"b"		maybe_binary	mark recolor=-1
+	"o"		maybe_octal	mark recolor=-1
+	"x"		maybe_hex	mark recolor=-1
+	"0-9_"		decimal		recolor=-1
 	"."		maybe_float
-	"eE"		maybe_exp       mark recolor=-1
+	"eE"		maybe_exp	mark recolor=-1
 	"ui"		int_suffix	noeat mark buffer
-	"f"		float_suffix    noeat mark buffer
+	"f"		float_suffix	noeat mark buffer
 
 :maybe_binary Bad
-	*		idle	noeat
+	*		idle		noeat
 	"_"		maybe_binary
-	"01"		binary  noeat recolormark
+	"01"		binary		noeat recolormark
 	"2-9a-zA-Z"	bad_number
 
 :binary Number
-	*		suffix	noeat
+	*		suffix		noeat
 	"01_"		binary
 	"ui"		int_suffix	noeat mark buffer
-        "2-9eE"   	bad_number      recolor=-1
-        "."             maybe_bad_number        recolor=-1
+	"2-9eE"		bad_number	recolor=-1
+	"."		maybe_bad_number	recolor=-1
 
 :maybe_octal Bad
-	*		idle	noeat
+	*		idle		noeat
 	"_"		maybe_octal
-	"0-7"		octal   noeat recolormark
+	"0-7"		octal		noeat recolormark
 	"89a-zA-Z"	bad_number
 
 :octal Number
-	*		suffix	noeat
+	*		suffix		noeat
 	"0-7_"		octal
 	"ui"		int_suffix	noeat mark buffer
-        "89eE"       	bad_number      recolor=-1
-        "."             maybe_bad_number        recolor=-1
+	"89eE"		bad_number	recolor=-1
+	"."		maybe_bad_number	recolor=-1
 
 :maybe_hex Bad
-	*		idle	noeat
-	"_"     	maybe_hex
-	"0-9A-Fa-f"	hex     noeat recolormark
+	*		idle		noeat
+	"_"		maybe_hex
+	"0-9A-Fa-f"	hex		noeat recolormark
 	"g-zG-Z"	bad_number
 
 :hex Number
-	*		suffix	noeat
+	*		suffix		noeat
 	"0-9A-Fa-f_"	hex
 	"ui"		int_suffix	noeat mark buffer
-        "."             maybe_bad_number        recolor=-1
+	"."		maybe_bad_number	recolor=-1
 
 :decimal Number
-	*		suffix	noeat
+	*		suffix		noeat
 	"0-9_"		decimal
 	"."		maybe_float
-	"eE"		maybe_exp       mark recolor=-1
+	"eE"		maybe_exp	mark recolor=-1
 	"ui"		int_suffix	noeat mark buffer
 	"f"		float_suffix	noeat mark buffer
 
 :int_suffix Suffix
-	*		suffix	noeat markend strings
+	*		suffix		noeat markend strings
 	"i8"		valid_number_suffix
 	"i16"		valid_number_suffix
 	"i32"		valid_number_suffix
@@ -169,61 +169,61 @@ done
 	"iusze0-9"	int_suffix
 
 :maybe_float Number
-	*		idle	noeat recolor=-2
+	*		idle		noeat recolor=-2
 	"0-9"		float
 
 :float Number
-	*		suffix	noeat
+	*		suffix		noeat
 	"0-9_"		float
-	"eE"		maybe_exp       mark recolor=-1
+	"eE"		maybe_exp	mark recolor=-1
 	"f"		float_suffix	noeat mark buffer
 
 :maybe_exp Bad
 	*		bad_number	noeat
-	"_+\-"   	exp_sign
-        "0-9"           exp     noeat recolormark
+	"_+\-"		exp_sign
+	"0-9"		exp		noeat recolormark
 
 :exp_sign Bad
-        *               bad_number    noeat
-        "_"        	exp_sign
-        "0-9"           exp     noeat recolormark
+	*		bad_number	noeat
+	"_"		exp_sign
+	"0-9"		exp		noeat recolormark
 
 :exp Number
-	*		suffix	noeat
+	*		suffix		noeat
 	"0-9_"		exp
 	"f"		float_suffix	noeat mark buffer
 
 :float_suffix Suffix
-	*		suffix	noeat markend strings
+	*		suffix		noeat markend strings
 	"f16"		valid_number_suffix
 	"f32"		valid_number_suffix
 	"f64"		valid_number_suffix
 	"f128"		valid_number_suffix
 done
-	"f0-9"   	float_suffix
+	"f0-9"		float_suffix
 
 :valid_number_suffix Number
-	*		idle	noeat
-	"a-zA-z0-9_"	suffix        noeat recolormark
+	*		idle		noeat
+	"a-zA-z0-9_"	suffix		noeat recolormark
 
 :suffix Suffix
-        *		idle	noeat
+	*		idle		noeat
 	"a-zA-z0-9_"	suffix
 
 :maybe_bad_number Bad
-	*		idle	noeat
-	"a-zA-Z_"	idle	noeat recolor=-2
-	"0-9"	        bad_number
+	*		idle		noeat
+	"a-zA-Z_"	idle		noeat recolor=-2
+	"0-9"		bad_number
 
 :bad_number Bad
-	*		idle	noeat
+	*		idle		noeat
 	"a-zA-z0-9_"	bad_number
 
 
 # Character constants, lifetimes and loop_labels:
 
 :single_quote Lifetime
-	*		char            recolor=-2
+	*		char		recolor=-2
 	"a-zA-Z_"	maybe_lifetime
 	"'"		idle		recolormark
 
@@ -250,7 +250,7 @@ done
 # Identifiers (Edition 2024)
 
 :ident Idle
-	*		idle	noeat markend strings
+	*		idle		noeat markend strings
 
 	# Strict keywords
 	"as"		operator
