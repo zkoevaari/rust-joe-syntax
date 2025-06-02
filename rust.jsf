@@ -32,8 +32,8 @@
 =Conditional	bold blue
 #~ =Loop		bold
 =Loop		bold blue
-#~ =Qualifyer	bold
-=Qualifyer	bold blue
+#~ =Qualifier	bold
+=Qualifier	bold blue
 #~ =Structure	bold
 =Structure	bold blue
 #~ =Type		bold
@@ -57,8 +57,8 @@
 	"0"		zero		recolor=-1
 	"1-9"		decimal		recolor=-1
 	"a-zA-Z_"	ident		mark buffer
-	"\""		string		recolor=-1
 	"'"		maybe_char	mark recolor=-1
+	"\""		string		recolor=-1
 	"/"		slash		recolor=-1
 	"#"		hash		recolor=-1
 	"?"		question	recolor=-1
@@ -284,6 +284,7 @@ done
 :byte_prefix Ident
 	*		idle		noeat recolor=-1
 	"'"		byte		recolor=-2
+	"\""		byte_str	recolor=-2
 
 :byte Character
 	*		char_end
@@ -305,8 +306,121 @@ done
 
 
 # Strings
-# Raw strings
+
+:string String
+	*		string
+	"\\"		str_esc		mark recolor=-1
+	"\""		suffix
+
+:str_esc StringEscape
+	*		str_bad_esc	noeat recolormark
+	"0nrt'\"\n\\"	string
+	"u"		maybe_str_uni
+	"x"		str_hex1
+
+:str_hex1 StringEscape
+	*		str_bad_esc	noeat recolormark
+	"0-7"		str_hex2
+
+:str_hex2 StringEscape
+	*		str_bad_esc	noeat recolormark
+	"0-9a-fA-F"	string
+
+:maybe_str_uni StringEscape
+	*		str_bad_esc	noeat recolormark
+	"{"		str_uni_start
+
+:str_uni_start StringEscape
+	*		str_bad_esc	noeat recolormark
+	"0-9a-fA-F"	str_uni
+
+:str_uni StringEscape
+	*		str_bad_esc	noeat recolormark
+	"0-9a-fA-F_"	str_uni
+	"}"		string
+
+:str_bad_esc Bad
+	*		string
+
+
 # Byte strings
+
+:byte_str String
+	*		byte_str
+	"\\"		bstr_esc	mark recolor=-1
+	"\""		suffix
+
+:bstr_esc StringEscape
+	*		bstr_bad_esc	noeat recolormark
+	"0nrt'\"\n\\"	byte_str
+	"x"		bstr_hex1
+
+:bstr_hex1 StringEscape
+	*		bstr_bad_esc	noeat recolormark
+	"0-9a-fA-F"	bstr_hex2
+
+:bstr_hex2 StringEscape
+	*		bstr_bad_esc	noeat recolormark
+	"0-9a-fA-F"	byte_str
+
+:bstr_bad_esc Bad
+	*		byte_str
+
+
+# C strings
+
+:cstr_prefix Ident
+	*		idle		noeat recolor=-1
+	"\""		c_string	recolor=-2
+
+:c_string String
+	*		c_string
+	"\\"		cstr_esc	mark recolor=-1
+	"\""		suffix
+
+:cstr_esc StringEscape
+	*		cstr_bad_esc	noeat recolormark
+	"nrt'\"\n\\"	c_string
+	"u"		maybe_cstr_uni
+	"x"		cstr_hex1
+
+:cstr_hex1 StringEscape
+	*		cstr_bad_esc	noeat recolormark
+	"0"		cstr_hex2_0
+	"1-7"		cstr_hex2
+
+:cstr_hex2_0 StringEscape
+	*		cstr_bad_esc	noeat recolormark
+	"1-9a-fA-F"	c_string
+
+:cstr_hex2 StringEscape
+	*		cstr_bad_esc	noeat recolormark
+	"0-9a-fA-F"	c_string
+
+:maybe_cstr_uni StringEscape
+	*		cstr_bad_esc	noeat recolormark
+	"{"		cstr_uni_start
+
+:cstr_uni_start StringEscape
+	*		cstr_bad_esc	noeat recolormark
+	"0"		cstr_uni_0
+	"1-9a-fA-F"	cstr_uni
+
+:cstr_uni_0 StringEscape
+	*		cstr_bad_esc	noeat recolormark
+	"0_"		cstr_uni_0
+	"1-9a-fA-F"	cstr_uni
+
+:cstr_uni StringEscape
+	*		cstr_bad_esc	noeat recolormark
+	"0-9a-fA-F_"	cstr_uni
+	"}"		c_string
+
+:cstr_bad_esc Bad
+	*		c_string
+
+
+# Raw strings
 # Raw byte strings
 
 
@@ -410,9 +524,10 @@ done
 	"uint"		depr
 
 	# Prefixes
-	"r"		raw_prefix
 	"b"		byte_prefix
-	"br"		raw_byte_prefix
+	"c"		cstr_prefix
+	#~ "r"		raw_prefix
+	#~ "br"		raw_byte_prefix
 done
 	"a-zA-Z0-9_"	ident
 	"!"		macro		noeat recolormark
@@ -435,7 +550,7 @@ done
 :loop Loop
 	*		idle		noeat
 
-:quali Qualifyer
+:quali Qualifier
 	*		idle		noeat
 
 :struct Structure

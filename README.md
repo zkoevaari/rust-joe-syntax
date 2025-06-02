@@ -40,22 +40,23 @@ along with this program; if not, see
 - Number literals:
     - Improved underscore and decimal point parsing
     - Improved float exponents
-- Literal suffix support: marks suspicious tokens that are valid, but only
-    when processed by a macro
+- Characters and strings:
+    - Rules for marking invalid escapes
+    - C-string support
+- Support for Literal suffixes: marks suspicious tokens that are valid, but
+    only when processed by a macro
 
 
 ## Known limitations ##
 
 - Does not mark deprecated range operators as bad
-- Does not enforce the 6 hex digit limit in unicode char literal escapes
+- Does not enforce the 6 hex digit limitation in unicode escapes
 - Allows char and string literal suffixes starting with a number
 
 
 ## TODO ##
 
-- strings
 - raw strings
-- byte strings
 - raw byte strings
 - common traits
 - macros (dollar)
