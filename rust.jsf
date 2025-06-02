@@ -54,16 +54,16 @@
 
 :idle Idle
 	*		idle
-	"{}"		brace		recolor=-1
 	"0"		zero		recolor=-1
 	"1-9"		decimal		recolor=-1
+	"a-zA-Z_"	ident		mark buffer
 	"\""		string		recolor=-1
 	"'"		single_quote	recolor=-1
 	"/"		slash		recolor=-1
 	"#"		hash		recolor=-1
 	"?"		question	recolor=-1
-	"a-zA-Z_"	ident		mark buffer
-	".,:;=()><[]*&|!~+\-%^"	control	recolor=-1
+	"{}"		brace		recolor=-1
+	".,:;=()><[]*&|!~+%^\-"	control	recolor=-1
 
 :slash Idle
 	*		idle		noeat
@@ -99,8 +99,8 @@
 	"b"		maybe_binary	mark recolor=-1
 	"o"		maybe_octal	mark recolor=-1
 	"x"		maybe_hex	mark recolor=-1
-	"0-9_"		decimal		recolor=-1
-	"."		maybe_float
+	"0-9_"		decimal
+	"."		maybe_float	recolor=-1
 	"eE"		maybe_exp	mark recolor=-1
 	"ui"		int_suffix	noeat mark buffer
 	"f"		float_suffix	noeat mark buffer
@@ -116,7 +116,7 @@
 	"01_"		binary
 	"ui"		int_suffix	noeat mark buffer
 	"2-9eE"		bad_number	recolor=-1
-	"."		maybe_bad_number	recolor=-1
+	"."		maybe_bad	recolor=-1
 
 :maybe_octal Bad
 	*		idle		noeat
@@ -129,7 +129,7 @@
 	"0-7_"		octal
 	"ui"		int_suffix	noeat mark buffer
 	"89eE"		bad_number	recolor=-1
-	"."		maybe_bad_number	recolor=-1
+	"."		maybe_bad	recolor=-1
 
 :maybe_hex Bad
 	*		idle		noeat
@@ -141,12 +141,12 @@
 	*		suffix		noeat
 	"0-9A-Fa-f_"	hex
 	"ui"		int_suffix	noeat mark buffer
-	"."		maybe_bad_number	recolor=-1
+	"."		maybe_bad	recolor=-1
 
 :decimal Number
 	*		suffix		noeat
 	"0-9_"		decimal
-	"."		maybe_float
+	"."		maybe_float	recolor=-1
 	"eE"		maybe_exp	mark recolor=-1
 	"ui"		int_suffix	noeat mark buffer
 	"f"		float_suffix	noeat mark buffer
@@ -168,9 +168,13 @@
 done
 	"iusze0-9"	int_suffix
 
-:maybe_float Number
-	*		idle		noeat recolor=-2
-	"0-9"		float
+:maybe_bad Control
+	*		bad_number	noeat recolor=-2
+	"._a-zA-Z"	idle		noeat
+
+:maybe_float Control
+	*		idle		noeat
+	"0-9\ \n"	float		noeat recolor=-2
 
 :float Number
 	*		suffix		noeat
@@ -204,20 +208,15 @@ done
 
 :valid_number_suffix Number
 	*		idle		noeat
-	"a-zA-z0-9_"	suffix		noeat recolormark
+	"a-zA-Z0-9_"	suffix		noeat recolormark
 
 :suffix Suffix
 	*		idle		noeat
-	"a-zA-z0-9_"	suffix
-
-:maybe_bad_number Bad
-	*		idle		noeat
-	"a-zA-Z_"	idle		noeat recolor=-2
-	"0-9"		bad_number
+	"a-zA-Z0-9_"	suffix
 
 :bad_number Bad
 	*		idle		noeat
-	"a-zA-z0-9_"	bad_number
+	"a-zA-Z0-9_"	bad_number
 
 
 # Character constants, lifetimes and loop_labels:

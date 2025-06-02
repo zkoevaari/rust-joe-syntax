@@ -57,5 +57,4 @@ along with this program; if not, see
 - doc comments
 - raw identifiers and raw lifetimes
 - empty ''
-- ..
 - check for possible `noeat` infinite loops
