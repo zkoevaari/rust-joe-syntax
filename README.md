@@ -44,17 +44,24 @@ along with this program; if not, see
     when processed by a macro
 
 
+## Known limitations ##
+
+- Does not mark deprecated range operators as bad
+- Does not enforce the 6 hex digit limit in unicode char literal escapes
+- Allows char and string literal suffixes starting with a number
+
+
 ## TODO ##
 
 - strings
 - raw strings
 - byte strings
 - raw byte strings
-- char escapes
 - common traits
 - macros (dollar)
 - ! bang
 - doc comments
 - raw identifiers and raw lifetimes
-- empty ''
+- check \r
 - check for possible `noeat` infinite loops
+- UTF8 support

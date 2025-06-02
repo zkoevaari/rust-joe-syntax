@@ -11,7 +11,7 @@
 =StringEscape		bold magenta
 #~ =Character		cyan
 =Character		magenta
-=CharacterEscape
+=CharacterEscape	bold magenta
 
 #~ =Lifetime	yellow
 =Lifetime	cyan
@@ -58,7 +58,7 @@
 	"1-9"		decimal		recolor=-1
 	"a-zA-Z_"	ident		mark buffer
 	"\""		string		recolor=-1
-	"'"		single_quote	recolor=-1
+	"'"		maybe_char	mark recolor=-1
 	"/"		slash		recolor=-1
 	"#"		hash		recolor=-1
 	"?"		question	recolor=-1
@@ -174,7 +174,7 @@ done
 
 :maybe_float Control
 	*		idle		noeat
-	"0-9\ \n"	float		noeat recolor=-2
+	"0-9\ \r\n"	float		noeat recolor=-2
 
 :float Number
 	*		suffix		noeat
@@ -219,27 +219,91 @@ done
 	"a-zA-Z0-9_"	bad_number
 
 
-# Character constants, lifetimes and loop_labels:
+# Characters, lifetimes and loop_labels:
 
-:single_quote Lifetime
-	*		char		recolor=-2
+:maybe_char Character
+	*		char_end
+	"\\"		maybe_char_esc	recolor=-1
+	"'\n\r\t"	bad_char	noeat recolormark
 	"a-zA-Z_"	maybe_lifetime
-	"'"		idle		recolormark
 
 :maybe_lifetime Lifetime
-	*		idle		noeat
-	"'"		char_done	recolor=-3
-	"0-9a-zA-Z_"	maybe_lifetime
+	*		lifetime	noeat recolormark
+	"'"		char_done	recolor=-1
+	"0-9a-zA-Z_"	lifetime	recolormark
 
-:char Character
-	*		idle		noeat recolor=-3
+:lifetime Lifetime
+	*		idle		noeat
+	"'"		bad_char_end	recolormark
+	"0-9a-zA-Z_"	lifetime
+
+:maybe_char_esc CharacterEscape
+	*		bad_char	recolor=-3
+	"0nrt'\"\\"	char_end
+	"u"		maybe_char_uni
+	"x"		char_hex1
+
+:char_hex1 CharacterEscape
+	*		bad_char	noeat recolormark
+	"0-7"		char_hex2
+
+:char_hex2 CharacterEscape
+	*		bad_char	noeat recolormark
+	"0-9a-fA-F"	char_end
+
+:maybe_char_uni CharacterEscape
+	*		bad_char	noeat recolormark
+	"{"		char_uni_start
+
+:char_uni_start CharacterEscape
+	*		bad_char	noeat recolormark
+	"0-9a-fA-F"	char_uni
+
+:char_uni CharacterEscape
+	*		bad_char	noeat recolormark
+	"0-9a-fA-F_"	char_uni
+	"}"		char_end
+
+:char_end Character
+	*		bad_char	noeat recolormark
 	"'"		char_done
 
 :char_done Character
+	*		suffix		noeat
+
+:bad_char Bad
+	*		bad_char
+	"'\n"		bad_char_end
+
+:bad_char_end Bad
 	*		idle		noeat
 
 
-# Character escapes
+# Byte literals
+
+:byte_prefix Ident
+	*		idle		noeat recolor=-1
+	"'"		byte		recolor=-2
+
+:byte Character
+	*		char_end
+	"\\"		maybe_byte_esc	recolor=-1
+	"'\n\r\t"	bad_char	noeat recolormark
+
+:maybe_byte_esc CharacterEscape
+	*		bad_char	noeat recolormark
+	"0nrt'\"\\"	char_end
+	"x"		byte_hex1
+
+:byte_hex1 CharacterEscape
+	*		bad_char	noeat recolormark
+	"0-9a-fA-F"	byte_hex2
+
+:byte_hex2 CharacterEscape
+	*		bad_char	noeat recolormark
+	"0-9a-fA-F"	char_end
+
+
 # Strings
 # Raw strings
 # Byte strings
