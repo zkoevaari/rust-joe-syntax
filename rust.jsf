@@ -282,7 +282,7 @@ done
 # Byte literals
 
 :byte_prefix Idle
-	*		idle		noeat recolor=-1
+	*		idle		noeat
 	"'"		byte		recolor=-2
 	"\""		byte_str	recolor=-2
 
@@ -370,7 +370,7 @@ done
 # C strings
 
 :cstr_prefix Idle
-	*		idle		noeat recolor=-1
+	*		idle		noeat
 	"\""		c_string	recolor=-2
 
 :c_string String
@@ -421,7 +421,98 @@ done
 
 
 # Raw strings
-# Raw byte strings
+
+:raw_prefix Idle
+	*		idle		noeat
+	"#"		raw_hash	recolormark recolor=-1 buffer
+	"\""		raw_str0	recolormark recolor=-1
+
+:raw_hash String
+	*		raw_str_bad	noeat recolormark
+	"#"		raw_hash
+	"\""		raw_start	hold
+
+:raw_start String
+	*		raw_str5_plus	noeat strings
+	"#"		raw_str1
+	"##"		raw_str2
+	"###"		raw_str3
+	"####"		raw_str4
+done
+
+:raw_str0 String
+	*		raw_str0
+	"\""		suffix
+
+:raw_str1 String
+	*		raw_str1
+	"\""		maybe_raw_end1	buffer
+
+:maybe_raw_end1 String
+	*		raw_str1	noeat strings
+	"\"#"		raw_end
+done
+	"#"		maybe_raw_end1	strings
+	"\"#"		raw_end
+done
+
+:raw_str2 String
+	*		raw_str2
+	"\""		maybe_raw_end2	buffer
+
+:maybe_raw_end2 String
+	*		raw_str2	noeat strings
+	"\"##"		raw_end
+done
+	"#"		maybe_raw_end2	strings
+	"\"##"		raw_end
+done
+
+:raw_str3 String
+	*		raw_str3
+	"\""		maybe_raw_end3	buffer
+
+:maybe_raw_end3 String
+	*		raw_str3	noeat strings
+	"\"###"		raw_end
+done
+	"#"		maybe_raw_end3	strings
+	"\"###"		raw_end
+done
+
+:raw_str4 String
+	*		raw_str4
+	"\""		maybe_raw_end4	buffer
+
+:maybe_raw_end4 String
+	*		raw_str4	noeat strings
+	"\"####"	raw_end
+done
+	"#"		maybe_raw_end4	strings
+	"\"####"	raw_end
+done
+
+:raw_str5_plus String
+	*		raw_str5_plus
+	"\""		maybe_raw_end5	buffer
+
+:maybe_raw_end5 String
+	*		raw_str5_plus	noeat strings
+	"\"#####"	raw_end5
+done
+	"#"		maybe_raw_end5	strings
+	"\"#####"	raw_end5
+done
+
+:raw_end5 String
+	*		raw_end		noeat
+	"#"		raw_end5
+
+:raw_end String
+	*		suffix		noeat
+
+:raw_str_bad Bad
+	*		idle		noeat
 
 
 # Identifiers (Edition 2024)
@@ -526,8 +617,9 @@ done
 	# Prefixes
 	"b"		byte_prefix
 	"c"		cstr_prefix
-	#~ "r"		raw_prefix
-	#~ "br"		raw_byte_prefix
+	"r"		raw_prefix
+	"br"		raw_prefix
+	"cr"		raw_prefix
 done
 	"a-zA-Z0-9_"	ident
 	"!"		macro		noeat recolormark

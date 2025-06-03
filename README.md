@@ -36,13 +36,14 @@ along with this program; if not, see
 
 ## New features ##
 
-(TODO: compared to what?)
+(TODO: recheck, also: compared to what?)
 - Number literals:
     - Improved underscore and decimal point parsing
     - Improved float exponents
 - Characters and strings:
     - Rules for marking invalid escapes
-    - C-string support
+    - C-string and raw c-string support
+    - Slightly improved raw string termination
 - Support for Literal suffixes: marks suspicious tokens that are valid, but
     only when processed by a macro
 
@@ -51,13 +52,13 @@ along with this program; if not, see
 
 - Does not mark deprecated range operators as bad
 - Does not enforce the 6 hex digit limitation in unicode escapes
+- In raw strings, when using 5 or more starting hashmarks, the number of
+    closing hashmarks is not enforced (terminates at 5, but highlights all)
 - Allows char and string literal suffixes starting with a number
 
 
 ## TODO ##
 
-- raw strings
-- raw byte strings
 - common traits
 - macros (dollar)
 - ! bang
