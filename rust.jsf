@@ -281,7 +281,7 @@ done
 
 # Byte literals
 
-:byte_prefix Ident
+:byte_prefix Idle
 	*		idle		noeat recolor=-1
 	"'"		byte		recolor=-2
 	"\""		byte_str	recolor=-2
@@ -369,7 +369,7 @@ done
 
 # C strings
 
-:cstr_prefix Ident
+:cstr_prefix Idle
 	*		idle		noeat recolor=-1
 	"\""		c_string	recolor=-2
 
