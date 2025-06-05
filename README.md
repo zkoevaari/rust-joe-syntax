@@ -44,17 +44,27 @@ along with this program; if not, see
     - Rules for marking invalid escapes
     - C-string and raw c-string support
     - Slightly improved raw string termination
-- Support for Literal suffixes: marks suspicious tokens that are valid, but
+- Improved prefix support:
+    - Raw identifiers and raw lifetimes
+    - Marking reserved prefixes and reserved guards
+- Support for literal suffixes: marks suspicious tokens that are valid, but
     only when processed by a macro
 
 
 ## Known limitations ##
+
+The highlighting is not perfect in certain edge cases, due to compromises or
+technical restrictions:
 
 - Does not mark deprecated range operators as bad
 - Does not enforce the 6 hex digit limitation in unicode escapes
 - In raw strings, when using 5 or more starting hashmarks, the number of
     closing hashmarks is not enforced (terminates at 5, but highlights all)
 - Allows char and string literal suffixes starting with a number
+- Does not recognize those exceptional keywords, that cannot be used even as
+    raw identifiers or raw lifetimes
+
+Please provide convincing reasons why we should improve on these.
 
 
 ## TODO ##
@@ -63,7 +73,6 @@ along with this program; if not, see
 - macros (dollar)
 - ! bang
 - doc comments
-- raw identifiers and raw lifetimes
 - check \r
 - check for possible `noeat` infinite loops
 - UTF8 support

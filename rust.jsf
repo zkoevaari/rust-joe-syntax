@@ -11,6 +11,7 @@
 =StringEscape		bold magenta
 #~ =Character		cyan
 =Character		magenta
+#~ =CharacterEscape	bold cyan
 =CharacterEscape	bold magenta
 
 #~ =Lifetime	yellow
@@ -46,6 +47,7 @@
 =Control
 =QuestionMark	red
 
+=Green green
 
 :pre_idle Idle
 	*		NULL		noeat call=.rust()
@@ -225,16 +227,23 @@ done
 	*		char_end
 	"\\"		maybe_char_esc	recolor=-1
 	"'\n\r\t"	bad_char	noeat recolormark
-	"a-zA-Z_"	maybe_lifetime
+	"r"		maybe_raw_lt
+	"a-qs-zA-Z_"	maybe_lt
 
-:maybe_lifetime Lifetime
+:maybe_lt Lifetime
 	*		lifetime	noeat recolormark
 	"'"		char_done	recolor=-1
+	"#"		bad_char_end	recolormark recolor=-1
 	"0-9a-zA-Z_"	lifetime	recolormark
+
+:maybe_raw_lt Lifetime
+	*		lifetime	noeat recolormark
+	"'"		char_done	recolor=-1
+	"0-9a-zA-Z_#"	lifetime	recolormark
 
 :lifetime Lifetime
 	*		idle		noeat
-	"'"		bad_char_end	recolormark
+	"'#"		bad_char_end	recolormark recolor=-1
 	"0-9a-zA-Z_"	lifetime
 
 :maybe_char_esc CharacterEscape
@@ -285,6 +294,7 @@ done
 	*		idle		noeat
 	"'"		byte		recolor=-2
 	"\""		byte_str	recolor=-2
+	"#"		prefix_bad	noeat recolor=-2
 
 :byte Character
 	*		char_end
@@ -372,6 +382,7 @@ done
 :cstr_prefix Idle
 	*		idle		noeat
 	"\""		c_string	recolor=-2
+	"#'"		prefix_bad	noeat recolor=-2
 
 :c_string String
 	*		c_string
@@ -424,13 +435,34 @@ done
 
 :raw_prefix Idle
 	*		idle		noeat
+	"#"		maybe_raw_ident	buffer
+	"\""		raw_str0	recolormark recolor=-1
+	"'"		raw_str_bad	noeat recolormark
+
+:maybe_raw_ident Idle
+	*		raw_ident	noeat
+	"_"		maybe_raw_wild
+	"#\""		raw_hash	noeat
+	"0-9"		raw_str_bad	noeat recolormark
+
+:maybe_raw_wild Idle
+	*		raw_str_bad	noeat recolormark
+	"0-9a-zA-Z_"	raw_ident
+
+:raw_ident Idle
+	*		idle		noeat
+	"0-9a-zA-Z_"	raw_ident
+
+:raw_str_prefix Idle
+	*		idle		noeat
 	"#"		raw_hash	recolormark recolor=-1 buffer
 	"\""		raw_str0	recolormark recolor=-1
+	"'"		raw_str_bad	noeat recolormark
 
 :raw_hash String
 	*		raw_str_bad	noeat recolormark
 	"#"		raw_hash
-	"\""		raw_start	hold
+	"\""		raw_start	hold recolormark
 
 :raw_start String
 	*		raw_str5_plus	noeat strings
@@ -518,7 +550,7 @@ done
 # Identifiers (Edition 2024)
 
 :ident Idle
-	*		idle		noeat markend strings
+	*		maybe_reserved	noeat strings
 
 	# Strict keywords
 	"as"		operator
@@ -618,8 +650,8 @@ done
 	"b"		byte_prefix
 	"c"		cstr_prefix
 	"r"		raw_prefix
-	"br"		raw_prefix
-	"cr"		raw_prefix
+	"br"		raw_str_prefix
+	"cr"		raw_str_prefix
 done
 	"a-zA-Z0-9_"	ident
 	"!"		macro		noeat recolormark
@@ -654,6 +686,13 @@ done
 :depr Deprecated
 	*		idle		noeat
 
+:maybe_reserved Idle
+	*		idle		noeat recolormark
+	"#'\""		prefix_bad	noeat recolormark
+
+:prefix_bad Bad
+	*		idle		noeat recolor=-1
+
 
 # Macro invocations
 
@@ -667,6 +706,8 @@ done
 	*		idle		noeat recolor=-2
 	"["		attr
 	"!"		maybe_inner
+	"\""		reserved_guard	noeat recolor=-2
+	"#"		reserved_pounds	recolor=-2
 
 :maybe_inner Attribute
 	*		idle		noeat recolor=-3
@@ -676,5 +717,11 @@ done
 	*		attr
 	"]"		idle
 
+:reserved_guard Bad
+	*		string		recolor=-1
+
+:reserved_pounds Bad
+	*		idle		noeat
+	"#"		reserved_pounds
 
 .end
