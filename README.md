@@ -56,6 +56,7 @@ along with this program; if not, see
     `!`, `?`, `#` and `$` individually (when they are not part of other
     recognized language structures)
 - Updated list of identifiers (Edition 2024)
+- Option to highlight the most common special (i.e. derivable and auto) traits
 
 
 ## Known limitations ##
@@ -70,13 +71,17 @@ technical restrictions:
 - Allows char and string literal suffixes starting with a number
 - Does not recognize those exceptional keywords, that cannot be used even as
     raw identifiers or raw lifetimes
+- The list of special traits is somewhat incomplete, because the line had to
+    be drawn somewhere (could have included all 30+ traits from core::ops, the
+    special types like `Box` and `Rc`, then if we went this far already, why
+    leave out anything that is in the Prelude...)
+- Traits are not highlighted inside the actual `derive` attribute
 
 Please provide convincing reasons why we should improve on these.
 
 
 ## TODO ##
 
-- common traits
 - doc comments
 - check \r
 - check for possible `noeat` infinite loops

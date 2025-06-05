@@ -43,6 +43,7 @@
 =Structure	bold blue
 #~ =Type		bold
 =Type		bold blue
+=SpecialTrait	green
 =Deprecated
 
 =Bad		bold red
@@ -662,6 +663,27 @@ done
 	"sizeof"	depr
 	"uint"		depr
 
+	# Special traits
+	"Clone"		trait
+	"Copy"		trait
+	"Debug"		trait
+	"Default"	trait
+	"Display"	trait
+	"Eq"		trait
+	"Hash"		trait
+	"Ord"		trait
+	"PartialEq"	trait
+	"PartialOrd"	trait
+	"RefUnwindSafe"	trait
+	"Send"		trait
+	"Sync"		trait
+	"Unpin"		trait
+	"UnwindSafe"	trait
+	"Drop"		trait
+	"Error"		trait
+	"Sized"		trait
+	"Termination"	trait
+
 	# Prefixes
 	"b"		byte_prefix
 	"c"		cstr_prefix
@@ -697,6 +719,9 @@ done
 	*		idle		noeat
 
 :type Type
+	*		idle		noeat
+
+:trait SpecialTrait
 	*		idle		noeat
 
 :depr Deprecated
