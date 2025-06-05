@@ -18,8 +18,12 @@
 =Lifetime	cyan
 #~ =Attribute	blue
 =Attribute	yellow
+#~ =HashMark	blue
+=HashMark	yellow
 #~ =Macro		blue
 =Macro		yellow
+#~ =DollarSign	blue
+=DollarSign	yellow
 #~ =Suffix		blue
 =Suffix		yellow
 
@@ -45,9 +49,9 @@
 #~ =Brace		magenta
 =Brace
 =Control
-=QuestionMark	red
+=ExclamationMark	red
+=QuestionMark		red
 
-=Green green
 
 :pre_idle Idle
 	*		NULL		noeat call=.rust()
@@ -63,9 +67,11 @@
 	"\""		string		recolor=-1
 	"/"		slash		recolor=-1
 	"#"		hash		recolor=-1
+	"!"		bang		recolor=-1
 	"?"		question	recolor=-1
+	"$"		dollar		recolor=-1
 	"{}"		brace		recolor=-1
-	".,:;=()><[]*&|!~+%^\-"	control	recolor=-1
+	".,:;=()><[]*&|~+%^\-"	control	recolor=-1
 
 :slash Idle
 	*		idle		noeat
@@ -78,8 +84,18 @@
 :control Control
 	*		idle		noeat
 
+:bang ExclamationMark
+	*		idle		noeat
+	"="		control		recolor=-2
+
 :question QuestionMark
 	*		idle		noeat
+
+:dollar DollarSign
+	*		idle		noeat
+
+
+# Comments
 
 :comment Comment
 	*		comment
@@ -702,10 +718,10 @@ done
 
 # Attributes
 
-:hash Attribute
-	*		idle		noeat recolor=-2
-	"["		attr
-	"!"		maybe_inner
+:hash HashMark
+	*		idle		noeat
+	"["		attr		recolor=-2
+	"!"		maybe_inner	recolor=-2
 	"\""		reserved_guard	noeat recolor=-2
 	"#"		reserved_pounds	recolor=-2
 

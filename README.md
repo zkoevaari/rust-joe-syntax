@@ -34,9 +34,10 @@ along with this program; if not, see
 ```
 
 
-## New features ##
+## List of improvements ##
 
 (TODO: recheck, also: compared to what?)
+- Lifetimes
 - Number literals:
     - Improved underscore and decimal point parsing
     - Improved float exponents
@@ -49,6 +50,12 @@ along with this program; if not, see
     - Marking reserved prefixes and reserved guards
 - Support for literal suffixes: marks suspicious tokens that are valid, but
     only when processed by a macro
+- Attributes
+- Macros
+- Option to assign a separate color to control characters as a group, and to
+    `!`, `?`, `#` and `$` individually (when they are not part of other
+    recognized language structures)
+- Updated list of identifiers (Edition 2024)
 
 
 ## Known limitations ##
@@ -70,8 +77,6 @@ Please provide convincing reasons why we should improve on these.
 ## TODO ##
 
 - common traits
-- macros (dollar)
-- ! bang
 - doc comments
 - check \r
 - check for possible `noeat` infinite loops
