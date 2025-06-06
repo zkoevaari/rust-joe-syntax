@@ -33,16 +33,24 @@ along with this program; if not, see
 <https://www.gnu.org/licenses/>.
 ```
 
+## Status ##
+
+Alpha testing is under way.
+
+Feedback would be much appreciated.
+
 
 ## List of improvements ##
 
-(TODO: recheck, also: compared to what?)
+Base of comparison is `rust.jsf` that is bundled with `joe` version 4.6 at the
+time of starting this project (2025).
+
 - Lifetimes
 - Number literals:
-    - Improved underscore and decimal point parsing
+    - Improved underscore and decimal point parsing (also when using ranges)
     - Improved float exponents
 - Characters and strings:
-    - Rules for marking invalid escapes
+    - Improved escapes, also marking those that are invalid
     - C-string and raw c-string support
     - Slightly improved raw string termination
 - Improved prefix support:
@@ -57,6 +65,17 @@ along with this program; if not, see
     recognized language structures)
 - Updated list of identifiers (Edition 2024)
 - Option to highlight the most common special (i.e. derivable and auto) traits
+- Improved comments:
+    - Separate color class for doc comments, and one just for their starting
+        and ending markers
+    - Nesting support
+
+
+## Known bugs ##
+
+- Proper highlighting of "TODO", "NOTE" etc. requires `comment_todo.jsf` to be
+    configured to use matching colors
+- Allows char and string literal suffixes to start with a number
 
 
 ## Known limitations ##
@@ -68,7 +87,6 @@ technical restrictions:
 - Does not enforce the 6 hex digit limitation in unicode escapes
 - In raw strings, when using 5 or more starting hashmarks, the number of
     closing hashmarks is not enforced (terminates at 5, but highlights all)
-- Allows char and string literal suffixes starting with a number
 - Does not recognize those exceptional keywords, that cannot be used even as
     raw identifiers or raw lifetimes
 - The list of special traits is somewhat incomplete, because the line had to
@@ -76,13 +94,14 @@ technical restrictions:
     special types like `Box` and `Rc`, then if we went this far already, why
     leave out anything that is in the Prelude...)
 - Traits are not highlighted inside the actual `derive` attribute
+- Comment nesting is 4 levels deep maximum
 
 Please provide convincing reasons why we should improve on these.
 
 
 ## TODO ##
 
-- doc comments
-- check \r
-- check for possible `noeat` infinite loops
-- UTF8 support
+- Check \r
+- Check for possible `noeat` infinite loops
+- Check Unicode support
+- Check if everything works with Joe's global color classes as well

@@ -1,57 +1,64 @@
 # JOE syntax highlight file for Rust
 
 =Idle
-#~ =Comment		green
-=Comment		dim
+
+=Comment		green
+#~ =Comment		dim
+=DocComment		green
+#~ =DocComment		dim yellow
+=DocCommentDelim	bold green
+#~ =DocCommentDelim	dim bold yellow
+
 =Number			cyan
 =Boolean		cyan
-#~ =String			cyan
-=String			magenta
-#~ =StringEscape		bold cyan
-=StringEscape		bold magenta
-#~ =Character		cyan
-=Character		magenta
-#~ =CharacterEscape	bold cyan
-=CharacterEscape	bold magenta
+=String			cyan
+#~ =String			magenta
+=StringEscape		bold cyan
+#~ =StringEscape		bold magenta
+=Character		cyan
+#~ =Character		magenta
+=CharacterEscape	bold cyan
+#~ =CharacterEscape	bold magenta
 
-#~ =Lifetime	yellow
-=Lifetime	cyan
-#~ =Attribute	blue
-=Attribute	yellow
-#~ =HashMark	blue
-=HashMark	yellow
-#~ =Macro		blue
-=Macro		yellow
-#~ =DollarSign	blue
-=DollarSign	yellow
-#~ =Suffix		blue
-=Suffix		yellow
+=Lifetime	yellow
+#~ =Lifetime	cyan
+=Attribute	blue
+#~ =Attribute	yellow
+=HashMark	blue
+#~ =HashMark	yellow
+=Macro		blue
+#~ =Macro		yellow
+=DollarSign	blue
+#~ =DollarSign	yellow
+=Suffix		blue
+#~ =Suffix		yellow
 
-#~ =Keyword	bold
-=Keyword	bold blue
-#~ =Operator	bold
-=Operator	bold blue
-#~ =Statement	bold
-=Statement	bold blue
-#~ =Conditional	bold
-=Conditional	bold blue
-#~ =Loop		bold
-=Loop		bold blue
-#~ =Qualifier	bold
-=Qualifier	bold blue
-#~ =Structure	bold
-=Structure	bold blue
-#~ =Type		bold
-=Type		bold blue
-=SpecialTrait	green
+=Keyword	bold
+#~ =Keyword	bold blue
+=Operator	bold
+#~ =Operator	bold blue
+=Statement	bold
+#~ =Statement	bold blue
+=Conditional	bold
+#~ =Conditional	bold blue
+=Loop		bold
+#~ =Loop		bold blue
+=Qualifier	bold
+#~ =Qualifier	bold blue
+=Structure	bold
+#~ =Structure	bold blue
+=Type		bold
+#~ =Type		bold blue
+=SpecialTrait	bold blue
+#~ =SpecialTrait	green
 =Deprecated
 
 =Bad		bold red
-#~ =Brace		magenta
-=Brace
+=Brace		magenta
+#~ =Brace
 =Control
-=ExclamationMark	red
-=QuestionMark		red
+=ExclamationMark	bold dim red
+=QuestionMark		bold dim red
 
 
 :pre_idle Idle
@@ -66,18 +73,13 @@
 	"a-zA-Z_"	ident		mark buffer
 	"'"		maybe_char	mark recolor=-1
 	"\""		string		recolor=-1
-	"/"		slash		recolor=-1
+	"/"		slash		mark
 	"#"		hash		recolor=-1
 	"!"		bang		recolor=-1
 	"?"		question	recolor=-1
 	"$"		dollar		recolor=-1
 	"{}"		brace		recolor=-1
 	".,:;=()><[]*&|~+%^\-"	control	recolor=-1
-
-:slash Idle
-	*		idle		noeat
-	"*"		comment		recolor=-2
-	"/"		line_comment	recolor=-2
 
 :brace Brace
 	*		idle		noeat
@@ -98,18 +100,146 @@
 
 # Comments
 
-:comment Comment
-	*		comment
-	"*"		maybe_end_comment
+:slash Idle
+	*		idle			noeat
+	"/"		line_comment_start	recolor=-2
+	"*"		block_comment_start	recolor=-2
 
-:maybe_end_comment Comment
-	*		comment		noeat
-	"/"		idle
+:line_comment_start Comment
+	*		line_comment	noeat markend
+	"/"		maybe_line_doc	recolor=-3
+	"!"		line_doc_start	recolor=-3
 
 :line_comment Comment
 	*		line_comment
+	"BFHNTX"	line_comment	noeat call=comment_todo.comment_todo()
 	"\n"		idle
 
+:maybe_line_doc DocCommentDelim
+	*		line_doc	noeat markend
+	"/"		line_comment	noeat recolormark
+
+:line_doc_start DocCommentDelim
+	*		line_doc	noeat markend
+
+:line_doc DocComment
+	*		line_doc
+	"BFHNTX"	line_doc	noeat call=comment_todo.comment_todo()
+	"\n"		idle
+
+:block_comment_start Comment
+	*		block_comment		noeat markend
+	"*"		maybe_block_outer	recolor=-3
+	"!"		block_doc_start		recolor=-3
+
+:block_comment Comment
+	*		block_comment
+	"BFHNTX"	block_comment	noeat call=comment_todo.comment_todo()
+	"*"		maybe_end_comment
+	"/"		maybe_nest_comment
+
+:maybe_end_comment Comment
+	*		block_comment	noeat
+	"/"		idle
+
+:maybe_nest_comment Comment
+	*		block_comment	noeat
+	"*"		block_comment2
+
+:block_comment2 Comment
+	*		block_comment2
+	"BFHNTX"	block_comment2	noeat call=comment_todo.comment_todo()
+	"*"		maybe_end_comment2
+	"/"		maybe_nest_comment2
+
+:maybe_end_comment2 Comment
+	*		block_comment2	noeat
+	"/"		block_comment
+
+:maybe_nest_comment2 Comment
+	*		block_comment2	noeat
+	"*"		block_comment3
+
+:block_comment3 Comment
+	*		block_comment3
+	"BFHNTX"	block_comment3	noeat call=comment_todo.comment_todo()
+	"*"		maybe_end_comment3
+	"/"		maybe_nest_comment3
+
+:maybe_end_comment3 Comment
+	*		block_comment3	noeat
+	"/"		block_comment2
+
+:maybe_nest_comment3 Comment
+	*		block_comment3	noeat
+	"*"		block_comment4
+
+:block_comment4 Comment
+	*		block_comment4
+	"BFHNTX"	block_comment4	noeat call=comment_todo.comment_todo()
+	"*"		maybe_end_comment4
+
+:maybe_end_comment4 Comment
+	*		block_comment4	noeat
+	"/"		block_comment3
+
+:maybe_block_outer DocCommentDelim
+	*		block_doc		noeat markend
+	"*/"		maybe_end_comment	noeat recolormark
+
+:block_doc_start DocCommentDelim
+	*		block_doc	noeat
+
+:block_doc DocComment
+	*		block_doc
+	"BFHNTX"	block_doc	noeat call=comment_todo.comment_todo()
+	"*"		maybe_end_doc	recolor=-1
+	"/"		maybe_nest_doc
+
+:maybe_end_doc DocCommentDelim
+	*		block_doc	noeat recolor=-2
+	"/"		idle
+
+:maybe_nest_doc DocComment
+	*		block_doc	noeat
+	"*"		block_doc2
+
+:block_doc2 DocComment
+	*		block_doc2
+	"BFHNTX"	block_doc2	noeat call=comment_todo.comment_todo()
+	"*"		maybe_end_doc2
+	"/"		maybe_nest_doc2
+
+:maybe_end_doc2 DocComment
+	*		block_doc2	noeat
+	"/"		block_doc
+
+:maybe_nest_doc2 DocComment
+	*		block_doc2	noeat
+	"*"		block_doc3
+
+:block_doc3 DocComment
+	*		block_doc3
+	"BFHNTX"	block_doc3	noeat call=comment_todo.comment_todo()
+	"*"		maybe_end_doc3
+	"/"		maybe_nest_doc3
+
+:maybe_end_doc3 DocComment
+	*		block_doc3	noeat
+	"/"		block_doc2
+
+:maybe_nest_doc3 DocComment
+	*		block_doc3	noeat
+	"*"		block_doc4
+
+:block_doc4 DocComment
+	*		block_doc4
+	"BFHNTX"	block_doc4	noeat call=comment_todo.comment_todo()
+	"*"		maybe_end_doc4
+
+:maybe_end_doc4 DocComment
+	*		block_doc4	noeat
+	"/"		block_doc3
 
 # Numbers
 
