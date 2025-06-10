@@ -35,7 +35,7 @@ along with this program; if not, see
 
 ## Status ##
 
-Alpha testing is under way.
+Project is in alpha testing phase.
 
 Feedback would be much appreciated.
 
@@ -95,13 +95,16 @@ technical restrictions:
     leave out anything that is in the Prelude...)
 - Traits are not highlighted inside the actual `derive` attribute
 - Comment nesting is 4 levels deep maximum
+- Non-ASCII characters are not matched specifically, so they may not be
+    highlighted correctly (generally they should be okay in char/string
+    literals or comments, and in identifier positions there are restrictions
+    related to `extern` anyway)
 
-Please provide convincing reasons why we should improve on these.
+Please provide convincing reasons why we should improve on these topics.
 
 
 ## TODO ##
 
-- Check \r
-- Check for possible `noeat` infinite loops
-- Check Unicode support
-- Check if everything works with Joe's global color classes as well
+- Create a `joe`-specific version using some of its newer features:
+    - Check if everything works with globally defined colors as well
+    - Improve on non-ASCII support using `\c`, `\s` etc. character classes

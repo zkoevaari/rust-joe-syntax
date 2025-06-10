@@ -323,7 +323,7 @@ done
 
 :maybe_float Control
 	*		idle		noeat
-	"0-9\ \r\n"	float		noeat recolor=-2
+	"0-9\ \n\r\t"	float		noeat recolor=-2
 
 :float Number
 	*		suffix		noeat
