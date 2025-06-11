@@ -3,16 +3,24 @@ Rust syntax for `joe` and `ne`
 
 This is an effort to provide an up-to-date and improved Rust language syntax
 definition file for *Joe's Own Editor*.\
-The file can also be used for the *nice editor*, as it happens to use the same
-syntax definition system.
+The file can also be used for the *nice editor*, as it uses the same syntax
+definition system (although an earlier version apparently).
 
-Due to the conflicting licenses, this is a complete rewrite, although one that
-aims to consider in particular all the issues that came up in recent years
-(and were fixed) in the version bundled with `joe`. So we hope this provides
-an experience that is at least as good as the old one, with many new features.
+Due to the conflicting licenses, this is a complete rewrite, but one that aims
+to consider in particular all the issues that came up in recent years (and
+were fixed) in the version bundled with `joe`. So we hope this provides an
+experience that is at least as good as the old one, with many new features.
+
+**Branches:**
+- `main`: For the use with `joe`, employing some of the newer features of the
+    JSF syntax
+- `ne`: Legacy color scheme for `ne`, similar to the old one and others like
+    `c.jsf` etc.
+- `ne-alt`: Alternative color scheme for `ne`, for those who might want to try
+    something that is a bit different
 
 
-## Licensing notes ##
+## Licensing ##
 
 To be compatible with both projects, this work is licensed under GPLv2, or (at
 your option) any later version.
@@ -84,7 +92,7 @@ The highlighting is not perfect in certain edge cases, due to compromises or
 technical restrictions:
 
 - Does not mark deprecated range operators as bad
-- Does not enforce the 6 hex digit limitation in unicode escapes
+- Does not enforce the 6 hex digit limitation in Unicode escapes
 - In raw strings, when using 5 or more starting hashmarks, the number of
     closing hashmarks is not enforced (terminates at 5, but highlights all)
 - Does not recognize those exceptional keywords, that cannot be used even as
