@@ -1,6 +1,10 @@
 # JOE syntax highlight file for Rust
+# Created by Zoltan Kovari <zkoevaari>, 2025.
+# Licensed under GPL-2.0-or-later
+# Version: 1.0.0
 
 =Idle
+=Ident
 
 =Comment		green
 #~ =Comment		dim
@@ -70,7 +74,7 @@
 	*		idle
 	"0"		zero		recolor=-1
 	"1-9"		decimal		recolor=-1
-	"a-zA-Z_"	ident		mark buffer
+	"a-zA-Z_"	ident		mark buffer recolor=-1
 	"'"		maybe_char	mark recolor=-1
 	"\""		string		recolor=-1
 	"/"		slash		mark
@@ -437,7 +441,7 @@ done
 
 # Byte literals
 
-:byte_prefix Idle
+:byte_prefix Ident
 	*		idle		noeat
 	"'"		byte		recolor=-2
 	"\""		byte_str	recolor=-2
@@ -526,7 +530,7 @@ done
 
 # C strings
 
-:cstr_prefix Idle
+:cstr_prefix Ident
 	*		idle		noeat
 	"\""		c_string	recolor=-2
 	"#'"		prefix_bad	noeat recolor=-2
@@ -580,27 +584,27 @@ done
 
 # Raw strings
 
-:raw_prefix Idle
+:raw_prefix Ident
 	*		idle		noeat
 	"#"		maybe_raw_ident	buffer
 	"\""		raw_str0	recolormark recolor=-1
 	"'"		raw_str_bad	noeat recolormark
 
-:maybe_raw_ident Idle
+:maybe_raw_ident Ident
 	*		raw_ident	noeat
 	"_"		maybe_raw_wild
 	"#\""		raw_hash	noeat
 	"0-9"		raw_str_bad	noeat recolormark
 
-:maybe_raw_wild Idle
+:maybe_raw_wild Ident
 	*		raw_str_bad	noeat recolormark
 	"0-9a-zA-Z_"	raw_ident
 
-:raw_ident Idle
+:raw_ident Ident
 	*		idle		noeat
 	"0-9a-zA-Z_"	raw_ident
 
-:raw_str_prefix Idle
+:raw_str_prefix Ident
 	*		idle		noeat
 	"#"		raw_hash	recolormark recolor=-1 buffer
 	"\""		raw_str0	recolormark recolor=-1
@@ -696,7 +700,7 @@ done
 
 # Identifiers (Edition 2024)
 
-:ident Idle
+:ident Ident
 	*		maybe_reserved	noeat strings
 
 	# Strict keywords
@@ -857,8 +861,8 @@ done
 :depr Deprecated
 	*		idle		noeat
 
-:maybe_reserved Idle
-	*		idle		noeat recolormark
+:maybe_reserved Ident
+	*		idle		noeat
 	"#'\""		prefix_bad	noeat recolormark
 
 :prefix_bad Bad

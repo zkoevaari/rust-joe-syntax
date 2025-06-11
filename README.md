@@ -107,4 +107,5 @@ Please provide convincing reasons why we should improve on these topics.
 
 - Create a `joe`-specific version using some of its newer features:
     - Check if everything works with globally defined colors as well
+    - Add <context> to relevant state definitions
     - Improve on non-ASCII support using `\c`, `\s` etc. character classes
