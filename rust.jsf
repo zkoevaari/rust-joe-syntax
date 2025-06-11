@@ -1,42 +1,42 @@
 # JOE syntax highlight file for Rust
 # Created by Zoltan Kovari <zkoevaari>, 2025.
 # Licensed under GPL-2.0-or-later
-# Branch: ne, version: 1.0.0
+# Branch: ne-alt, version: 1.0.0
 
 =Idle
 =Ident
 
-=Comment		green
-=DocComment		green
-=DocCommentDelim	bold green
+=Comment		dim
+=DocComment		dim yellow
+=DocCommentDelim	dim bold yellow
 
 =Number			cyan
 =Boolean		cyan
-=String			cyan
-=StringEscape		bold cyan
-=Character		cyan
-=CharacterEscape	bold cyan
+=String			magenta
+=StringEscape		bold magenta
+=Character		magenta
+=CharacterEscape	bold magenta
 
-=Lifetime	yellow
-=Attribute	blue
-=HashMark	blue
-=Macro		blue
-=DollarSign	blue
-=Suffix		blue
+=Lifetime	cyan
+=Attribute	yellow
+=HashMark	yellow
+=Macro		yellow
+=DollarSign	yellow
+=Suffix		yellow
 
-=Keyword	bold
-=Operator	bold
-=Statement	bold
-=Conditional	bold
-=Loop		bold
-=Qualifier	bold
-=Structure	bold
-=Type		bold
-=SpecialTrait	bold blue
+=Keyword	bold blue
+=Operator	bold blue
+=Statement	bold blue
+=Conditional	bold blue
+=Loop		bold blue
+=Qualifier	bold blue
+=Structure	bold blue
+=Type		bold blue
+=SpecialTrait	dim bold green
 =Deprecated
 
 =Bad		bold red
-=Brace		magenta
+=Brace
 =Control
 =ExclamationMark	bold dim red
 =QuestionMark		bold dim red
