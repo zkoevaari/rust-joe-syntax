@@ -1,68 +1,50 @@
 # JOE syntax highlight file for Rust
 # Created by Zoltan Kovari <zkoevaari>, 2025.
 # Licensed under GPL-2.0-or-later
-# Version: 1.0.0
+# Version: 1.1.0
 
 =Idle
 =Ident
 
-=Comment		green
-#~ =Comment		dim
-=DocComment		green
-#~ =DocComment		dim yellow
-=DocCommentDelim	bold green
-#~ =DocCommentDelim	dim bold yellow
+=Comment		#+Comment
+=DocComment		+Docstring +Comment
+#=DocCommentDelim	bold green
+=DocCommentDelim	+Docstring +Comment
 
-=Number			cyan
-=Boolean		cyan
-=String			cyan
-#~ =String			magenta
-=StringEscape		bold cyan
-#~ =StringEscape		bold magenta
-=Character		cyan
-#~ =Character		magenta
-=CharacterEscape	bold cyan
-#~ =CharacterEscape	bold magenta
+=Number			+Constant
+=Boolean		+Constant
+=String			+Constant
+=StringEscape		+Escape +String
+=Character		+Constant
+=CharacterEscape	+StringEscape
 
-=Lifetime	yellow
-#~ =Lifetime	cyan
-=Attribute	blue
-#~ =Attribute	yellow
-=HashMark	blue
-#~ =HashMark	yellow
-=Macro		blue
-#~ =Macro		yellow
-=DollarSign	blue
-#~ =DollarSign	yellow
-=Suffix		blue
-#~ =Suffix		yellow
+#=Lifetime		yellow
+=Lifetime		+Label
+=Attribute		+Preproc
+=HashMark		+Preproc
+=Macro			+Preproc
+=DollarSign		+Preproc
+=Suffix			+Preproc
 
-=Keyword	bold
-#~ =Keyword	bold blue
-=Operator	bold
-#~ =Operator	bold blue
-=Statement	bold
-#~ =Statement	bold blue
-=Conditional	bold
-#~ =Conditional	bold blue
-=Loop		bold
-#~ =Loop		bold blue
-=Qualifier	bold
-#~ =Qualifier	bold blue
-=Structure	bold
-#~ =Structure	bold blue
-=Type		bold
-#~ =Type		bold blue
-=SpecialTrait	bold blue
-#~ =SpecialTrait	green
+=Keyword		#+Keyword
+=Operator		+Keyword
+=Statement		+Keyword
+=Conditional		+Keyword
+=Loop			+Keyword
+=Qualifier		+Keyword
+=Structure		+Keyword
+=Type			+Keyword
+#=SpecialTrait		bold blue
+=SpecialTrait		+Builtin +DefinedType
 =Deprecated
 
-=Bad		bold red
-=Brace		magenta
-#~ =Brace
-=Control
-=ExclamationMark	bold dim red
-=QuestionMark		bold dim red
+=Bad			#+Bad
+=Brace			#+Brace
+=Control		#+Control
+#=ExclamationMark	bold dim red
+=ExclamationMark	+Control
+#=QuestionMark		bold dim red
+=QuestionMark		+Control
 
 
 :pre_idle Idle

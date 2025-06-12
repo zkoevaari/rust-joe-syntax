@@ -41,11 +41,36 @@ along with this program; if not, see
 <https://www.gnu.org/licenses/>.
 ```
 
+
 ## Status ##
 
 Project is in alpha testing phase.
 
 Feedback would be much appreciated.
+
+
+## Installation notes ##
+
+To install, place the file in `~/.joe/syntax/`.
+
+Some of the color classes may not have sensible defaults set in your color
+scheme. In this case, one option is to edit the JSF to directly specify a
+color instead of using a global class (for the most obvious cases commented
+examples were supplied, you can just flip those).\
+Alternatively, you could provide the missing colors in your color scheme file.
+For example the following snippet shows some values that would be satisfactory
+with `default.jcf`:
+
+```
+=rust.DocCommentDelim   bold green
+=rust.Lifetime          yellow
+=rust.SpecialTrait      bold blue
+=rust.ExclamationMark   bold dim red
+=rust.QuestionMark      bold dim red
+```
+
+You can tweak factory color schemes by copying the relevant JCF from the
+installation directory (e.g. `/usr/share/joe/colors/`) to `~/.joe/colors/`.
 
 
 ## List of improvements ##
@@ -113,7 +138,5 @@ Please provide convincing reasons why we should improve on these topics.
 
 ## TODO ##
 
-- Create a `joe`-specific version using some of its newer features:
-    - Check if everything works with globally defined colors as well
-    - Add <context> to relevant state definitions
-    - Improve on non-ASCII support using `\c`, `\s` etc. character classes
+- Add <context> to relevant state definitions
+- Improve on non-ASCII support using `\c`, `\s` etc. character classes
