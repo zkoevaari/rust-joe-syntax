@@ -81,8 +81,6 @@ time of starting this project (2025).
 
 ## Known bugs ##
 
-- Proper highlighting of "TODO", "NOTE" etc. requires `comment_todo.jsf` to be
-    configured to use matching colors
 - Allows char and string literal suffixes to start with a number
 
 
@@ -109,11 +107,3 @@ technical restrictions:
     related to `extern` anyway)
 
 Please provide convincing reasons why we should improve on these topics.
-
-
-## TODO ##
-
-- Create a `joe`-specific version using some of its newer features:
-    - Check if everything works with globally defined colors as well
-    - Add <context> to relevant state definitions
-    - Improve on non-ASCII support using `\c`, `\s` etc. character classes
