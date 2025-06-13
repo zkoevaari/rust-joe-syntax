@@ -1,7 +1,7 @@
 # JOE syntax highlight file for Rust
 # Created by Zoltan Kovari <zkoevaari>, 2025.
 # Licensed under GPL-2.0-or-later
-# Version: 1.1.0
+# Version: 1.1.1
 
 =Idle
 =Ident
@@ -10,6 +10,7 @@
 =DocComment		+Docstring +Comment
 #=DocCommentDelim	bold green
 =DocCommentDelim	+Docstring +Comment
+=TODO			#+TODO
 
 =Number			+Constant
 =Boolean		+Constant
@@ -98,7 +99,7 @@
 
 :line_comment Comment
 	*		line_comment
-	"BFHNTX"	line_comment	noeat call=comment_todo.comment_todo()
+	"BFHNTX"	line_comment	noeat call=.todo()
 	"\n"		idle
 
 :maybe_line_doc DocCommentDelim
@@ -110,7 +111,7 @@
 
 :line_doc DocComment
 	*		line_doc
-	"BFHNTX"	line_doc	noeat call=comment_todo.comment_todo()
+	"BFHNTX"	line_doc	noeat call=.todo()
 	"\n"		idle
 
 :block_comment_start Comment
@@ -120,7 +121,7 @@
 
 :block_comment Comment
 	*		block_comment
-	"BFHNTX"	block_comment	noeat call=comment_todo.comment_todo()
+	"BFHNTX"	block_comment	noeat call=.todo()
 	"*"		maybe_end_comment
 	"/"		maybe_nest_comment
 
@@ -134,7 +135,7 @@
 
 :block_comment2 Comment
 	*		block_comment2
-	"BFHNTX"	block_comment2	noeat call=comment_todo.comment_todo()
+	"BFHNTX"	block_comment2	noeat call=.todo()
 	"*"		maybe_end_comment2
 	"/"		maybe_nest_comment2
 
@@ -148,7 +149,7 @@
 
 :block_comment3 Comment
 	*		block_comment3
-	"BFHNTX"	block_comment3	noeat call=comment_todo.comment_todo()
+	"BFHNTX"	block_comment3	noeat call=.todo()
 	"*"		maybe_end_comment3
 	"/"		maybe_nest_comment3
 
@@ -162,7 +163,7 @@
 
 :block_comment4 Comment
 	*		block_comment4
-	"BFHNTX"	block_comment4	noeat call=comment_todo.comment_todo()
+	"BFHNTX"	block_comment4	noeat call=.todo()
 	"*"		maybe_end_comment4
 
 :maybe_end_comment4 Comment
@@ -178,7 +179,7 @@
 
 :block_doc DocComment
 	*		block_doc
-	"BFHNTX"	block_doc	noeat call=comment_todo.comment_todo()
+	"BFHNTX"	block_doc	noeat call=.todo()
 	"*"		maybe_end_doc	recolor=-1
 	"/"		maybe_nest_doc
 
@@ -192,7 +193,7 @@
 
 :block_doc2 DocComment
 	*		block_doc2
-	"BFHNTX"	block_doc2	noeat call=comment_todo.comment_todo()
+	"BFHNTX"	block_doc2	noeat call=.todo()
 	"*"		maybe_end_doc2
 	"/"		maybe_nest_doc2
 
@@ -206,7 +207,7 @@
 
 :block_doc3 DocComment
 	*		block_doc3
-	"BFHNTX"	block_doc3	noeat call=comment_todo.comment_todo()
+	"BFHNTX"	block_doc3	noeat call=.todo()
 	"*"		maybe_end_doc3
 	"/"		maybe_nest_doc3
 
@@ -220,7 +221,7 @@
 
 :block_doc4 DocComment
 	*		block_doc4
-	"BFHNTX"	block_doc4	noeat call=comment_todo.comment_todo()
+	"BFHNTX"	block_doc4	noeat call=.todo()
 	"*"		maybe_end_doc4
 
 :maybe_end_doc4 DocComment
@@ -880,5 +881,32 @@ done
 :reserved_pounds Bad
 	*		idle		noeat
 	"#"		reserved_pounds
+
+.end
+
+
+# TODO parsing for comments
+
+.subr todo
+
+:todo_init TODO
+	*		maybe_todo	mark buffer
+
+:maybe_todo TODO
+	*		todo_unknown	noeat strings
+	"BUG"		todo
+	"FIXME"		todo
+	"HACK"		todo
+	"NOTE"		todo
+	"TODO"		todo
+	"XXX"		todo
+done
+	"A-Z"		maybe_todo
+
+:todo TODO
+	*		NULL		noeat markend recolor=-1 return
+
+:todo_unknown TODO
+	*		NULL		noeat recolormark return
 
 .end

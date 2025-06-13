@@ -106,8 +106,6 @@ time of starting this project (2025).
 
 ## Known bugs ##
 
-- Proper highlighting of "TODO", "NOTE" etc. requires `comment_todo.jsf` to be
-    configured to use matching colors
 - Allows char and string literal suffixes to start with a number
 
 
@@ -138,5 +136,5 @@ Please provide convincing reasons why we should improve on these topics.
 
 ## TODO ##
 
-- Add <context> to relevant state definitions
+- Add `<context>` to relevant state definitions
 - Improve on non-ASCII support using `\c`, `\s` etc. character classes
