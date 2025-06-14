@@ -1,7 +1,7 @@
 # JOE syntax highlight file for Rust
 # Created by Zoltan Kovari <zkoevaari>, 2025.
 # Licensed under GPL-2.0-or-later
-# Version: 1.1.2
+# Version: 1.1.3
 
 =Idle
 =Ident
@@ -574,10 +574,10 @@ done
 	"'"		raw_str_bad	noeat recolormark
 
 :maybe_raw_ident Ident
-	*		raw_ident	noeat
+	*		raw_str_bad	noeat recolormark
 	"_"		maybe_raw_wild
 	"#\""		raw_hash	noeat
-	"0-9"		raw_str_bad	noeat recolormark
+	"a-zA-Z"	raw_ident	noeat
 
 :maybe_raw_wild Ident
 	*		raw_str_bad	noeat recolormark

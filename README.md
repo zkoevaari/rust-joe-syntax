@@ -104,11 +104,6 @@ time of starting this project (2025).
     - Nesting support
 
 
-## Known bugs ##
-
-- Allows char and string literal suffixes to start with a number
-
-
 ## Known limitations ##
 
 The highlighting is not perfect in certain edge cases, due to compromises or
