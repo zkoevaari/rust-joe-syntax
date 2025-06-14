@@ -41,6 +41,7 @@ along with this program; if not, see
 <https://www.gnu.org/licenses/>.
 ```
 
+
 ## Status ##
 
 Project is in alpha testing phase.
@@ -77,11 +78,6 @@ time of starting this project (2025).
     - Separate color class for doc comments, and one just for their starting
         and ending markers
     - Nesting support
-
-
-## Known bugs ##
-
-- Allows char and string literal suffixes to start with a number
 
 
 ## Known limitations ##
