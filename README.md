@@ -136,5 +136,4 @@ Please provide convincing reasons why we should improve on these topics.
 
 ## TODO ##
 
-- Add `<context>` to relevant state definitions
 - Improve on non-ASCII support using `\c`, `\s` etc. character classes

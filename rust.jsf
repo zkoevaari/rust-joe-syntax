@@ -1,7 +1,7 @@
 # JOE syntax highlight file for Rust
 # Created by Zoltan Kovari <zkoevaari>, 2025.
 # Licensed under GPL-2.0-or-later
-# Version: 1.1.1
+# Version: 1.1.2
 
 =Idle
 =Ident
@@ -92,139 +92,139 @@
 	"/"		line_comment_start	recolor=-2
 	"*"		block_comment_start	recolor=-2
 
-:line_comment_start Comment
+:line_comment_start Comment comment
 	*		line_comment	noeat markend
 	"/"		maybe_line_doc	recolor=-3
 	"!"		line_doc_start	recolor=-3
 
-:line_comment Comment
+:line_comment Comment comment
 	*		line_comment
 	"BFHNTX"	line_comment	noeat call=.todo()
 	"\n"		idle
 
-:maybe_line_doc DocCommentDelim
+:maybe_line_doc DocCommentDelim comment
 	*		line_doc	noeat markend
 	"/"		line_comment	noeat recolormark
 
-:line_doc_start DocCommentDelim
+:line_doc_start DocCommentDelim comment
 	*		line_doc	noeat markend
 
-:line_doc DocComment
+:line_doc DocComment comment
 	*		line_doc
 	"BFHNTX"	line_doc	noeat call=.todo()
 	"\n"		idle
 
-:block_comment_start Comment
+:block_comment_start Comment comment
 	*		block_comment		noeat markend
 	"*"		maybe_block_outer	recolor=-3
 	"!"		block_doc_start		recolor=-3
 
-:block_comment Comment
+:block_comment Comment comment
 	*		block_comment
 	"BFHNTX"	block_comment	noeat call=.todo()
 	"*"		maybe_end_comment
 	"/"		maybe_nest_comment
 
-:maybe_end_comment Comment
+:maybe_end_comment Comment comment
 	*		block_comment	noeat
 	"/"		idle
 
-:maybe_nest_comment Comment
+:maybe_nest_comment Comment comment
 	*		block_comment	noeat
 	"*"		block_comment2
 
-:block_comment2 Comment
+:block_comment2 Comment comment
 	*		block_comment2
 	"BFHNTX"	block_comment2	noeat call=.todo()
 	"*"		maybe_end_comment2
 	"/"		maybe_nest_comment2
 
-:maybe_end_comment2 Comment
+:maybe_end_comment2 Comment comment
 	*		block_comment2	noeat
 	"/"		block_comment
 
-:maybe_nest_comment2 Comment
+:maybe_nest_comment2 Comment comment
 	*		block_comment2	noeat
 	"*"		block_comment3
 
-:block_comment3 Comment
+:block_comment3 Comment comment
 	*		block_comment3
 	"BFHNTX"	block_comment3	noeat call=.todo()
 	"*"		maybe_end_comment3
 	"/"		maybe_nest_comment3
 
-:maybe_end_comment3 Comment
+:maybe_end_comment3 Comment comment
 	*		block_comment3	noeat
 	"/"		block_comment2
 
-:maybe_nest_comment3 Comment
+:maybe_nest_comment3 Comment comment
 	*		block_comment3	noeat
 	"*"		block_comment4
 
-:block_comment4 Comment
+:block_comment4 Comment comment
 	*		block_comment4
 	"BFHNTX"	block_comment4	noeat call=.todo()
 	"*"		maybe_end_comment4
 
-:maybe_end_comment4 Comment
+:maybe_end_comment4 Comment comment
 	*		block_comment4	noeat
 	"/"		block_comment3
 
-:maybe_block_outer DocCommentDelim
+:maybe_block_outer DocCommentDelim comment
 	*		block_doc		noeat markend
 	"*/"		maybe_end_comment	noeat recolormark
 
-:block_doc_start DocCommentDelim
+:block_doc_start DocCommentDelim comment
 	*		block_doc	noeat
 
-:block_doc DocComment
+:block_doc DocComment comment
 	*		block_doc
 	"BFHNTX"	block_doc	noeat call=.todo()
 	"*"		maybe_end_doc	recolor=-1
 	"/"		maybe_nest_doc
 
-:maybe_end_doc DocCommentDelim
+:maybe_end_doc DocCommentDelim comment
 	*		block_doc	noeat recolor=-2
 	"/"		idle
 
-:maybe_nest_doc DocComment
+:maybe_nest_doc DocComment comment
 	*		block_doc	noeat
 	"*"		block_doc2
 
-:block_doc2 DocComment
+:block_doc2 DocComment comment
 	*		block_doc2
 	"BFHNTX"	block_doc2	noeat call=.todo()
 	"*"		maybe_end_doc2
 	"/"		maybe_nest_doc2
 
-:maybe_end_doc2 DocComment
+:maybe_end_doc2 DocComment comment
 	*		block_doc2	noeat
 	"/"		block_doc
 
-:maybe_nest_doc2 DocComment
+:maybe_nest_doc2 DocComment comment
 	*		block_doc2	noeat
 	"*"		block_doc3
 
-:block_doc3 DocComment
+:block_doc3 DocComment comment
 	*		block_doc3
 	"BFHNTX"	block_doc3	noeat call=.todo()
 	"*"		maybe_end_doc3
 	"/"		maybe_nest_doc3
 
-:maybe_end_doc3 DocComment
+:maybe_end_doc3 DocComment comment
 	*		block_doc3	noeat
 	"/"		block_doc2
 
-:maybe_nest_doc3 DocComment
+:maybe_nest_doc3 DocComment comment
 	*		block_doc3	noeat
 	"*"		block_doc4
 
-:block_doc4 DocComment
+:block_doc4 DocComment comment
 	*		block_doc4
 	"BFHNTX"	block_doc4	noeat call=.todo()
 	"*"		maybe_end_doc4
 
-:maybe_end_doc4 DocComment
+:maybe_end_doc4 DocComment comment
 	*		block_doc4	noeat
 	"/"		block_doc3
 
@@ -357,7 +357,7 @@ done
 
 # Characters, lifetimes and loop_labels:
 
-:maybe_char Character
+:maybe_char Character string
 	*		char_end
 	"\\"		maybe_char_esc	recolor=-1
 	"'\n\r\t"	bad_char	noeat recolormark
@@ -380,38 +380,38 @@ done
 	"'#"		bad_char_end	recolormark recolor=-1
 	"0-9a-zA-Z_"	lifetime
 
-:maybe_char_esc CharacterEscape
+:maybe_char_esc CharacterEscape string
 	*		bad_char	recolor=-3
 	"0nrt'\"\\"	char_end
 	"u"		maybe_char_uni
 	"x"		char_hex1
 
-:char_hex1 CharacterEscape
+:char_hex1 CharacterEscape string
 	*		bad_char	noeat recolormark
 	"0-7"		char_hex2
 
-:char_hex2 CharacterEscape
+:char_hex2 CharacterEscape string
 	*		bad_char	noeat recolormark
 	"0-9a-fA-F"	char_end
 
-:maybe_char_uni CharacterEscape
+:maybe_char_uni CharacterEscape string
 	*		bad_char	noeat recolormark
 	"{"		char_uni_start
 
-:char_uni_start CharacterEscape
+:char_uni_start CharacterEscape string
 	*		bad_char	noeat recolormark
 	"0-9a-fA-F"	char_uni
 
-:char_uni CharacterEscape
+:char_uni CharacterEscape string
 	*		bad_char	noeat recolormark
 	"0-9a-fA-F_"	char_uni
 	"}"		char_end
 
-:char_end Character
+:char_end Character string
 	*		bad_char	noeat recolormark
 	"'"		char_done
 
-:char_done Character
+:char_done Character string
 	*		suffix		noeat
 
 :bad_char Bad
@@ -430,55 +430,55 @@ done
 	"\""		byte_str	recolor=-2
 	"#"		prefix_bad	noeat recolor=-2
 
-:byte Character
+:byte Character string
 	*		char_end
 	"\\"		maybe_byte_esc	recolor=-1
 	"'\n\r\t"	bad_char	noeat recolormark
 
-:maybe_byte_esc CharacterEscape
+:maybe_byte_esc CharacterEscape string
 	*		bad_char	noeat recolormark
 	"0nrt'\"\\"	char_end
 	"x"		byte_hex1
 
-:byte_hex1 CharacterEscape
+:byte_hex1 CharacterEscape string
 	*		bad_char	noeat recolormark
 	"0-9a-fA-F"	byte_hex2
 
-:byte_hex2 CharacterEscape
+:byte_hex2 CharacterEscape string
 	*		bad_char	noeat recolormark
 	"0-9a-fA-F"	char_end
 
 
 # Strings
 
-:string String
+:string String string
 	*		string
 	"\\"		str_esc		mark recolor=-1
 	"\""		suffix
 
-:str_esc StringEscape
+:str_esc StringEscape string
 	*		str_bad_esc	noeat recolormark
 	"0nrt'\"\n\\"	string
 	"u"		maybe_str_uni
 	"x"		str_hex1
 
-:str_hex1 StringEscape
+:str_hex1 StringEscape string
 	*		str_bad_esc	noeat recolormark
 	"0-7"		str_hex2
 
-:str_hex2 StringEscape
+:str_hex2 StringEscape string
 	*		str_bad_esc	noeat recolormark
 	"0-9a-fA-F"	string
 
-:maybe_str_uni StringEscape
+:maybe_str_uni StringEscape string
 	*		str_bad_esc	noeat recolormark
 	"{"		str_uni_start
 
-:str_uni_start StringEscape
+:str_uni_start StringEscape string
 	*		str_bad_esc	noeat recolormark
 	"0-9a-fA-F"	str_uni
 
-:str_uni StringEscape
+:str_uni StringEscape string
 	*		str_bad_esc	noeat recolormark
 	"0-9a-fA-F_"	str_uni
 	"}"		string
@@ -489,21 +489,21 @@ done
 
 # Byte strings
 
-:byte_str String
+:byte_str String string
 	*		byte_str
 	"\\"		bstr_esc	mark recolor=-1
 	"\""		suffix
 
-:bstr_esc StringEscape
+:bstr_esc StringEscape string
 	*		bstr_bad_esc	noeat recolormark
 	"0nrt'\"\n\\"	byte_str
 	"x"		bstr_hex1
 
-:bstr_hex1 StringEscape
+:bstr_hex1 StringEscape string
 	*		bstr_bad_esc	noeat recolormark
 	"0-9a-fA-F"	bstr_hex2
 
-:bstr_hex2 StringEscape
+:bstr_hex2 StringEscape string
 	*		bstr_bad_esc	noeat recolormark
 	"0-9a-fA-F"	byte_str
 
@@ -518,45 +518,45 @@ done
 	"\""		c_string	recolor=-2
 	"#'"		prefix_bad	noeat recolor=-2
 
-:c_string String
+:c_string String string
 	*		c_string
 	"\\"		cstr_esc	mark recolor=-1
 	"\""		suffix
 
-:cstr_esc StringEscape
+:cstr_esc StringEscape string
 	*		cstr_bad_esc	noeat recolormark
 	"nrt'\"\n\\"	c_string
 	"u"		maybe_cstr_uni
 	"x"		cstr_hex1
 
-:cstr_hex1 StringEscape
+:cstr_hex1 StringEscape string
 	*		cstr_bad_esc	noeat recolormark
 	"0"		cstr_hex2_0
 	"1-7"		cstr_hex2
 
-:cstr_hex2_0 StringEscape
+:cstr_hex2_0 StringEscape string
 	*		cstr_bad_esc	noeat recolormark
 	"1-9a-fA-F"	c_string
 
-:cstr_hex2 StringEscape
+:cstr_hex2 StringEscape string
 	*		cstr_bad_esc	noeat recolormark
 	"0-9a-fA-F"	c_string
 
-:maybe_cstr_uni StringEscape
+:maybe_cstr_uni StringEscape string
 	*		cstr_bad_esc	noeat recolormark
 	"{"		cstr_uni_start
 
-:cstr_uni_start StringEscape
+:cstr_uni_start StringEscape string
 	*		cstr_bad_esc	noeat recolormark
 	"0"		cstr_uni_0
 	"1-9a-fA-F"	cstr_uni
 
-:cstr_uni_0 StringEscape
+:cstr_uni_0 StringEscape string
 	*		cstr_bad_esc	noeat recolormark
 	"0_"		cstr_uni_0
 	"1-9a-fA-F"	cstr_uni
 
-:cstr_uni StringEscape
+:cstr_uni StringEscape string
 	*		cstr_bad_esc	noeat recolormark
 	"0-9a-fA-F_"	cstr_uni
 	"}"		c_string
@@ -593,12 +593,12 @@ done
 	"\""		raw_str0	recolormark recolor=-1
 	"'"		raw_str_bad	noeat recolormark
 
-:raw_hash String
+:raw_hash String string
 	*		raw_str_bad	noeat recolormark
 	"#"		raw_hash
 	"\""		raw_start	hold recolormark
 
-:raw_start String
+:raw_start String string
 	*		raw_str5_plus	noeat strings
 	"#"		raw_str1
 	"##"		raw_str2
@@ -606,15 +606,15 @@ done
 	"####"		raw_str4
 done
 
-:raw_str0 String
+:raw_str0 String string
 	*		raw_str0
 	"\""		suffix
 
-:raw_str1 String
+:raw_str1 String string
 	*		raw_str1
 	"\""		maybe_raw_end1	buffer
 
-:maybe_raw_end1 String
+:maybe_raw_end1 String string
 	*		raw_str1	noeat strings
 	"\"#"		raw_end
 done
@@ -622,11 +622,11 @@ done
 	"\"#"		raw_end
 done
 
-:raw_str2 String
+:raw_str2 String string
 	*		raw_str2
 	"\""		maybe_raw_end2	buffer
 
-:maybe_raw_end2 String
+:maybe_raw_end2 String string
 	*		raw_str2	noeat strings
 	"\"##"		raw_end
 done
@@ -634,11 +634,11 @@ done
 	"\"##"		raw_end
 done
 
-:raw_str3 String
+:raw_str3 String string
 	*		raw_str3
 	"\""		maybe_raw_end3	buffer
 
-:maybe_raw_end3 String
+:maybe_raw_end3 String string
 	*		raw_str3	noeat strings
 	"\"###"		raw_end
 done
@@ -646,11 +646,11 @@ done
 	"\"###"		raw_end
 done
 
-:raw_str4 String
+:raw_str4 String string
 	*		raw_str4
 	"\""		maybe_raw_end4	buffer
 
-:maybe_raw_end4 String
+:maybe_raw_end4 String string
 	*		raw_str4	noeat strings
 	"\"####"	raw_end
 done
@@ -658,11 +658,11 @@ done
 	"\"####"	raw_end
 done
 
-:raw_str5_plus String
+:raw_str5_plus String string
 	*		raw_str5_plus
 	"\""		maybe_raw_end5	buffer
 
-:maybe_raw_end5 String
+:maybe_raw_end5 String string
 	*		raw_str5_plus	noeat strings
 	"\"#####"	raw_end5
 done
@@ -670,11 +670,11 @@ done
 	"\"#####"	raw_end5
 done
 
-:raw_end5 String
+:raw_end5 String string
 	*		raw_end		noeat
 	"#"		raw_end5
 
-:raw_end String
+:raw_end String string
 	*		suffix		noeat
 
 :raw_str_bad Bad
