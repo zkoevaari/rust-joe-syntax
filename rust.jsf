@@ -1,7 +1,7 @@
 # JOE syntax highlight file for Rust
 # Created by Zoltan Kovari <zkoevaari>, 2025.
 # Licensed under GPL-2.0-or-later
-# Version: 1.1.3
+# Version: 1.1.4
 
 =Idle
 =Ident
@@ -57,7 +57,7 @@
 	*		idle
 	"0"		zero		recolor=-1
 	"1-9"		decimal		recolor=-1
-	"a-zA-Z_"	ident		mark buffer recolor=-1
+	"\i"		ident		mark buffer recolor=-1
 	"'"		maybe_char	mark recolor=-1
 	"\""		string		recolor=-1
 	"/"		slash		mark
@@ -243,9 +243,9 @@
 
 :maybe_binary Bad
 	*		idle		noeat
-	"_"		maybe_binary
+	"\c"		bad_number
 	"01"		binary		noeat recolormark
-	"2-9a-zA-Z"	bad_number
+	"_"		maybe_binary
 
 :binary Number
 	*		suffix		noeat
@@ -256,9 +256,9 @@
 
 :maybe_octal Bad
 	*		idle		noeat
-	"_"		maybe_octal
+	"\c"		bad_number
 	"0-7"		octal		noeat recolormark
-	"89a-zA-Z"	bad_number
+	"_"		maybe_octal
 
 :octal Number
 	*		suffix		noeat
@@ -269,9 +269,9 @@
 
 :maybe_hex Bad
 	*		idle		noeat
-	"_"		maybe_hex
+	"\i"		bad_number
 	"0-9A-Fa-f"	hex		noeat recolormark
-	"g-zG-Z"	bad_number
+	"_"		maybe_hex
 
 :hex Number
 	*		suffix		noeat
@@ -306,11 +306,11 @@ done
 
 :maybe_bad Control
 	*		bad_number	noeat recolor=-2
-	"._a-zA-Z"	idle		noeat
+	"\i."		idle		noeat
 
 :maybe_float Control
 	*		idle		noeat
-	"0-9\ \n\r\t"	float		noeat recolor=-2
+	"0-9\s"		float		noeat recolor=-2
 
 :float Number
 	*		suffix		noeat
@@ -344,15 +344,15 @@ done
 
 :valid_number_suffix Number
 	*		idle		noeat
-	"a-zA-Z0-9_"	suffix		noeat recolormark
+	"\c"		suffix		noeat recolormark
 
 :suffix Suffix
 	*		idle		noeat
-	"a-zA-Z0-9_"	suffix
+	"\c"		suffix
 
 :bad_number Bad
 	*		idle		noeat
-	"a-zA-Z0-9_"	bad_number
+	"\c"		bad_number
 
 
 # Characters, lifetimes and loop_labels:
@@ -361,24 +361,24 @@ done
 	*		char_end
 	"\\"		maybe_char_esc	recolor=-1
 	"'\n\r\t"	bad_char	noeat recolormark
+	"\i"		maybe_lt
 	"r"		maybe_raw_lt
-	"a-qs-zA-Z_"	maybe_lt
 
 :maybe_lt Lifetime
 	*		lifetime	noeat recolormark
 	"'"		char_done	recolor=-1
 	"#"		bad_char_end	recolormark recolor=-1
-	"0-9a-zA-Z_"	lifetime	recolormark
+	"\c"		lifetime	recolormark
 
 :maybe_raw_lt Lifetime
 	*		lifetime	noeat recolormark
 	"'"		char_done	recolor=-1
-	"0-9a-zA-Z_#"	lifetime	recolormark
+	"\c#"		lifetime	recolormark
 
 :lifetime Lifetime
 	*		idle		noeat
 	"'#"		bad_char_end	recolormark recolor=-1
-	"0-9a-zA-Z_"	lifetime
+	"\c"		lifetime
 
 :maybe_char_esc CharacterEscape string
 	*		bad_char	recolor=-3
@@ -575,17 +575,17 @@ done
 
 :maybe_raw_ident Ident
 	*		raw_str_bad	noeat recolormark
+	"\i"		raw_ident	noeat
 	"_"		maybe_raw_wild
 	"#\""		raw_hash	noeat
-	"a-zA-Z"	raw_ident	noeat
 
 :maybe_raw_wild Ident
 	*		raw_str_bad	noeat recolormark
-	"0-9a-zA-Z_"	raw_ident
+	"\c"		raw_ident
 
 :raw_ident Ident
 	*		idle		noeat
-	"0-9a-zA-Z_"	raw_ident
+	"\c"		raw_ident
 
 :raw_str_prefix Ident
 	*		idle		noeat
@@ -808,7 +808,7 @@ done
 	"br"		raw_str_prefix
 	"cr"		raw_str_prefix
 done
-	"a-zA-Z0-9_"	ident
+	"\c"		ident
 	"!"		macro		noeat recolormark
 
 :kw Keyword

@@ -121,14 +121,9 @@ technical restrictions:
     leave out anything that is in the Prelude...)
 - Traits are not highlighted inside the actual `derive` attribute
 - Comment nesting is 4 levels deep maximum
-- Non-ASCII characters are not matched specifically, so they may not be
-    highlighted correctly (generally they should be okay in char/string
-    literals or comments, and in identifier positions there are restrictions
-    related to `extern` anyway)
+- **(`ne*` only)** Non-ASCII characters are not matched specifically, so they
+    may not be highlighted correctly (generally they should be okay in
+    char/string literals or comments, and in identifier positions there are
+    restrictions related to `extern` anyway)
 
 Please provide convincing reasons why we should improve on these topics.
-
-
-## TODO ##
-
-- Improve on non-ASCII support using `\c`, `\s` etc. character classes
